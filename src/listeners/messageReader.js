@@ -28,7 +28,7 @@ exports.default = (client) => {
 //So thank karim for your audit logs not becoming cluttered
 //Signed, Pyro
 const fetchWebhook = async (message) => {
-    const webhookName = "NotQuiteTako";
+    const webhookName = process.env.WEBHOOK_NAME;
     const webhooks = await message.guild.fetchWebhooks();
     let notQuiteTako = webhooks.find(webhook => webhook.name === webhookName);
     //the dm check is purely to remove dm channel from the channel union type, bc the bot doesn't work in dms ANYWAY

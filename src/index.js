@@ -15,7 +15,7 @@ const client = new discord_js_1.Client({
         discord_js_1.Intents.FLAGS.GUILD_WEBHOOKS,
     ]
 });
+dotenv_1.default.config();
 (0, ready_1.default)(client);
 (0, messageReader_1.default)(client);
-dotenv_1.default.config();
 client.login(process.env.TOKEN);
