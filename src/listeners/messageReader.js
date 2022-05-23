@@ -70,7 +70,7 @@ const fixPoorMessage = async (message, client) => {
     if (emojis.size > 0) {
         output = message.content;
         for (const emoji of emojis.values()) {
-            output = output.replace(`:${emoji.name}:`, `<${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}>`);
+            output = output.replace(new RegExp(`:${emoji.name}:`, "g"), `<${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}>`);
         }
     }
     return output;
