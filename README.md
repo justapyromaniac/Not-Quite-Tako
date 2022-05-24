@@ -6,6 +6,6 @@ Created by justapyromaniac (me), with help from NxKarim (they also host the bot 
 
 ## FAQ
 
-The bot isn't sending emotes, it's just sending their name
-: Make sure your @everyone role is allowed to use external emotes. 
-: Discord uses this role for webhook perms, so it needs to be on for the webhook to use external emotes
+### The bot isn't sending emotes, it's just sending their name
+Make sure your @everyone role is allowed to use external emotes. 
+Discord uses this role for webhook perms, so it needs to be on for the webhook to use external emotes
