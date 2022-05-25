@@ -57,15 +57,10 @@ const fetchWebhook = async (message) => {
     }
 };
 const fixPoorMessage = async (message, client) => {
-    let match = message.content.match(/:(.+?):/g);
-    let guilds = await client.guilds.fetch();
     let guildEmojis, emojis;
-    emojis = new discord_js_1.Collection([]);
-    for (const guild of guilds.values()) {
-        let baseGuild = await guild.fetch();
-        guildEmojis = await baseGuild.emojis.fetch();
-        emojis = new discord_js_1.Collection([...emojis, ...guildEmojis.filter(emoji => match.includes(`:${emoji.name}:`))]);
-    }
+    //Using emojis cache. 
+    guildEmojis = message.guild.emojis.cache;
+    emojis = client.emojis.cache;
     let output;
     if (emojis.size > 0) {
         output = message.content;
