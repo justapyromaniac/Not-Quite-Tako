@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const discord_js_1 = require("discord.js");
 exports.default = (client) => {
     client.on("messageCreate", async (message) => {
         //return if the message was sent by a bot, or if the message doesn't contain any emotes or if it's in a DM (no webhooks in dms)
@@ -12,16 +11,14 @@ exports.default = (client) => {
         if (fixedMessage === undefined) {
             return;
         }
-        else {
-            const webhook = await fetchWebhook(message);
-            if (message.channel.isThread()) {
-                await sendFixedMessage(fixedMessage, message.member, webhook, message.channelId);
-            }
-            else {
-                await sendFixedMessage(fixedMessage, message.member, webhook, undefined);
-            }
-            message.delete();
+        const webhook = await fetchWebhook(message);
+        if (message.channel.isThread()) {
+            sendFixedMessage(fixedMessage, message.member, webhook, message.channelId);
         }
+        else {
+            sendFixedMessage(fixedMessage, message.member, webhook, undefined);
+        }
+        message.delete();
     });
 };
 //Karim helped with this piece of code specifically, dumbass me made a new webhook and deleted it every time
@@ -57,9 +54,9 @@ const fetchWebhook = async (message) => {
     }
 };
 const fixPoorMessage = async (message, client) => {
-    let emojis;
-    //Using emojis cache. 
-    emojis = client.emojis.cache;
+    //let match = message.content.match(/:(.+?):/g)
+    let emojis = client.emojis.cache;
+    //cache isn't infallable, need to refetch failed emotes
     let output;
     if (emojis.size > 0) {
         output = message.content;
@@ -67,9 +64,12 @@ const fixPoorMessage = async (message, client) => {
             output = output.replace(new RegExp(`:${emoji.name}:`, "g"), `<${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}>`);
         }
     }
+    if (output == message.content) {
+        return undefined;
+    }
     return output;
 };
-const sendFixedMessage = async (message, author, webhook, threadId) => {
+const sendFixedMessage = (message, author, webhook, threadId) => {
     webhook.send({
         content: message,
         username: author.displayName,
