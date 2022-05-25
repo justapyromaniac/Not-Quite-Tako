@@ -57,9 +57,8 @@ const fetchWebhook = async (message) => {
     }
 };
 const fixPoorMessage = async (message, client) => {
-    let guildEmojis, emojis;
+    let emojis;
     //Using emojis cache. 
-    guildEmojis = message.guild.emojis.cache;
     emojis = client.emojis.cache;
     let output;
     if (emojis.size > 0) {
