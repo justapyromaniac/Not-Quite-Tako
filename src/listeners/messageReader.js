@@ -54,7 +54,7 @@ const fetchWebhook = async (message) => {
     }
 };
 const fixPoorMessage = async (message, client) => {
-    let match = message.content.match(/:(.+?):/g);
+    let match = message.content.match(/(?!<a?):[^<:>]+?:(?!\d+>)/g);
     let emojis = client.emojis.cache;
     let guildEmojis = message.guild.emojis.cache;
     //cache isn't infallable, need to refetch failed emotes
