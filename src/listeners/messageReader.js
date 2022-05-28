@@ -7,7 +7,6 @@ exports.default = (client) => {
         if (message.author.bot || message.content.match(/(?!<a?):[^<:>]+?:(?!\d+>)/g) === null || message.channel.type === "DM") {
             return;
         }
-
         let fixedMessage = await fixPoorMessage(message, client);
         if (fixedMessage === undefined) {
             return;
@@ -55,7 +54,7 @@ const fetchWebhook = async (message) => {
     }
 };
 const fixPoorMessage = async (message, client) => {
-    let match = message.content.match(/:(.+?):/g);
+    let match = message.content.match(/(?!<a?):[^<:>]+?:(?!\d+>)/g);
     let emojis = client.emojis.cache;
     let guildEmojis = message.guild.emojis.cache;
     //cache isn't infallable, need to refetch failed emotes
@@ -83,9 +82,6 @@ const sendFixedMessage = (message, author, webhook, threadId) => {
         threadId: threadId
     })
         .catch(e => {
-            console.error(e);
-        });
+        console.error(e);
+    });
 };
-
-
-
