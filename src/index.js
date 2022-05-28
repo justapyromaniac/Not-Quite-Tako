@@ -16,6 +16,7 @@ const client = new discord_js_1.Client({
         discord_js_1.Intents.FLAGS.GUILDS,
         discord_js_1.Intents.FLAGS.GUILD_MESSAGES,
         discord_js_1.Intents.FLAGS.GUILD_WEBHOOKS,
+        discord_js_1.Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
     ]
 });
 
