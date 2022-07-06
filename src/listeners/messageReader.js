@@ -4,7 +4,7 @@ exports.default = (client) => {
     client.on("messageCreate", async (message) => {
         //return if the message was sent by a bot, or if the message doesn't contain any emotes or if it's in a DM (no webhooks in dms)
         //yes there's a lot of exclamation marks, they're all guarded but typescript is a bit dumb sometimes.
-        if (message.author.bot || message.content.match(/(?!<a?):[^<:>]+?:(?!\d+>)/g) === null || message.channel.type === "DM") {
+        if (message.author.bot || message.content.match(/(?!<a?):[^<a:>]+?:(?!\d+>)/g) === null || message.channel.type === "DM" || message.webhookId) {
             return;
         }
         let fixedMessage = await fixPoorMessage(message, client);
@@ -54,7 +54,7 @@ const fetchWebhook = async (message) => {
     }
 };
 const fixPoorMessage = async (message, client) => {
-    let match = message.content.match(/(?!<a?):[^<:>]+?:(?!\d+>)/g);
+    let match = message.content.match(/(?!<a?):[^<a:>]+?:(?!\d+>)/g);
     let emojis = client.emojis.cache;
     let guildEmojis = message.guild.emojis.cache;
     //cache isn't infallable, need to refetch failed emotes
@@ -66,7 +66,7 @@ const fixPoorMessage = async (message, client) => {
     if (filteredEmojis.size > 0) {
         output = message.content;
         for (const emoji of filteredEmojis.values()) {
-            output = output.replace(new RegExp(`:${emoji.name}:`, "g"), `<${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}>`);
+            output = output.replace(new RegExp(`(?!<.*):${emoji.name}:(?!.*>)`, "g"), `<${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}>`);
         }
     }
     if (output == message.content) {
