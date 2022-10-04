@@ -62,14 +62,12 @@ const fixPoorMessage = async (message, client) => {
         return undefined;
     }
     let filteredEmojis = emojis.filter(emoji => match.includes(`:${emoji.name}:`));
-    if (filteredEmojis.filter(emoji => emoji.animated).size <= 0) {
-        filteredEmojis.sweep((emoji, key) => guildEmojis.has(key));
-    }
+    filteredEmojis.sweep((emoji, key) => guildEmojis.has(key) && !emoji.animated);
     let output;
     if (filteredEmojis.size > 0) {
         output = message.content;
         for (const emoji of filteredEmojis.values()) {
-            output = output.replace(new RegExp(`(?!<.*):${emoji.name}:(?!.*>)`, "g"), `<${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}>`);
+            output = output.replace(new RegExp(`(?!<a?):${emoji.name}:(?!\\d+>)`, "g"), `<${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}>`);
         }
     }
     if (output == message.content) {
