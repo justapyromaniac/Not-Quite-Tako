@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageActionRow, MessageButton } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder , ButtonStyle, ComponentType} = require('discord.js');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('emojis')
@@ -13,24 +13,21 @@ module.exports = {
 
             guilds = [...guilds.keys()];
 
-            var rowb = new MessageActionRow()
+            var rowb = new ActionRowBuilder()
                 .addComponents(
-                    new MessageButton()
+                    new ButtonBuilder()
                         .setEmoji('⬅️')
                         .setCustomId('back')
-                        .setLabel('')
-                        .setStyle('SUCCESS'),
-
-                    new MessageButton()
+                        .setStyle(ButtonStyle.Success),
+                    new ButtonBuilder()
                         .setEmoji('➡️')
                         .setCustomId('fow')
-                        .setLabel('')
-                        .setStyle('SUCCESS'),
-                    new MessageButton()
+                        .setStyle(ButtonStyle.Success),
+                    new ButtonBuilder()
                         .setEmoji('❌')
                         .setCustomId('cancel')
                         .setLabel('Close')
-                        .setStyle('DANGER'),
+                        .setStyle(ButtonStyle.Danger),
                 );
 
             const emoteEmbed = {
@@ -42,12 +39,12 @@ module.exports = {
                 },
                 fields: [],
                 footer: {
-                    text: 'Made by just_a_pyro#9060 and a little help of NxKarim#1744.',
+                    text: 'Made by just_a_pyro#9060 and help of NxKarim#1744.',
                 },
             };
 
             await interaction.reply({ embeds: [emoteEmbed], components: [rowb], fetchReply: true, ephemeral: true });
-            const collector = interaction.channel.createMessageComponentCollector({ componentType: 'BUTTON', time: 200000 });
+            const collector = interaction.channel.createMessageComponentCollector({ componentType: ComponentType.Button, time: 200000 });
             let co = 0, guildoutputs = [], guildnames = [];
 
             let allguilds = client.guilds.cache.values();
