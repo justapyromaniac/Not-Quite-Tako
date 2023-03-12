@@ -11,16 +11,19 @@ const messageReader_1 = __importDefault(require("./listeners/messageReader"));
 const slashReader_1 = __importDefault(require("./listeners/slashReader"));
 const ready_1 = __importDefault(require("./listeners/ready"));
 console.log("Not Quite Tako is waking up...");
+
 const client = new discord_js_1.Client({
     intents: [
-        discord_js_1.Intents.FLAGS.GUILDS,
-        discord_js_1.Intents.FLAGS.GUILD_MESSAGES,
-        discord_js_1.Intents.FLAGS.GUILD_WEBHOOKS,
-        discord_js_1.Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+        discord_js_1.GatewayIntentBits.Guilds,
+        discord_js_1.GatewayIntentBits.GuildMessages,
+        discord_js_1.GatewayIntentBits.MessageContent,
+        discord_js_1.GatewayIntentBits.GuildWebhooks,
+        discord_js_1.GatewayIntentBits.GuildEmojisAndStickers,
     ]
 });
 
 client.commands = new Collection();
+client.webhook = new Collection();
 const slashFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const sfile of slashFiles) {
