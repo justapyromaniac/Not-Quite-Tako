@@ -18,6 +18,8 @@ exports.default = (client) => {
         sendFixedMessage(fixedMessage, message.member, webhook, (message.channel.isThread() ? message.channelId : undefined));
    
         message.delete();
+        
+        return;
     });
 };
 
