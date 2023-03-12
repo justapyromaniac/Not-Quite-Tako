@@ -14,5 +14,7 @@ exports.default = (client) => {
             console.error(error);
             await interaction.reply({ content: 'An error has ocurred.', ephemeral: true });
         }
+
+        return;
     });
 };

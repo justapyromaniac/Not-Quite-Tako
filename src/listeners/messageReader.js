@@ -9,7 +9,7 @@ exports.default = (client) => {
             return;
         }
 
-        let fixedMessage = await fixPoorMessage(message, client);
+        const fixedMessage = await fixPoorMessage(message, client);
         if (fixedMessage === undefined) { return; }
 
         const webhook = await fetchWebhook(message);
@@ -18,7 +18,7 @@ exports.default = (client) => {
         sendFixedMessage(fixedMessage, message.member, webhook, (message.channel.isThread() ? message.channelId : undefined));
    
         message.delete();
-        
+
         return;
     });
 };
@@ -81,8 +81,7 @@ const sendFixedMessage = (message, author, webhook, threadId) => {
         username: author.displayName,
         avatarURL: author.displayAvatarURL({ format: 'png', size: 1024 }),
         threadId: threadId
-    })
-        .catch(e => {
+    }).catch(e => {
             console.error(e);
         });
 };
