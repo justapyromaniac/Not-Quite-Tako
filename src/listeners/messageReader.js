@@ -65,7 +65,6 @@ const fixPoorMessage = async (message, client) => {
         output = message.content;
         for (const emoji of filteredEmojis.values()) {
             output = output.replace(new RegExp(`(?!<a?):${emoji.name}:(?!\\d+>)`, "g"), `<${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}>`);
-
         }
     }
 
