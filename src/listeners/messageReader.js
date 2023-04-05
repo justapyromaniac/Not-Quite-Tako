@@ -19,12 +19,11 @@ exports.default = (client) => {
             }
         }
 
-        //Yes there's a lot of exclamation marks, they're all guarded but typescript is a bit dumb sometimes.
-        if (message.content.match(/(?!<a?):[^<:>]+?:(?!\d+>)/g) === null) {
+        if (message.content.match(/(?!<a?|`.*):[^<:>\s]+?:(?!\d+>|.*`)/g) === null) {
             return;
         }
 
-        await NQT(message, client); //Moved NQT main function to make the code more organized with the adition of reacts.
+        await NQT(message, client); //Moved NQT main function to make the code more organized with the addition of reacts.
 
         return;
     });
@@ -71,7 +70,7 @@ const NQT = async (message, client) => {
     if (fixedMessage === undefined) { return; }
 
     const webhook = await fetchWebhook(message);
-
+    
     //Changed the if here so it looks a bit cleaner. (Nx)
     sendFixedMessage(fixedMessage, message.member, webhook, (message.channel.isThread() ? message.channelId : undefined));
 
@@ -87,14 +86,12 @@ const fetchWebhook = async (message) => {
     const webhooks = await message.guild.fetchWebhooks();
     let notQuiteTako = webhooks.find(webhook => webhook.name === webhookName);
 
-    //The dm check is purely to remove dm channel from the channel union type, bc the bot doesn't work in dms ANYWAY
-
     if (notQuiteTako === undefined && message.channel.type !== "DM") {
         if (message.channel.isThread()) {
-            notQuiteTako = await message.channel.parent.createWebhook(webhookName);
+            notQuiteTako = await message.channel.parent.createWebhook({name: webhookName});
         }
         else {
-            notQuiteTako = await message.channel.createWebhook(webhookName);
+            notQuiteTako = await message.channel.createWebhook({name: webhookName});
         }
     }
 
@@ -109,9 +106,9 @@ const fetchWebhook = async (message) => {
 };
 
 const fixPoorMessage = async (message, client) => {
-    let match = message.content.match(/(?!<a?):[^<:>]+?:(?!\d+>)/g);
+    let match = message.content.match(/(?!<a?):[^<:>\s]+?:(?!\d+>)/g);
     if (match === null) { return undefined; }
-    let emojis = client.emojis.cache;  //Cache isn't infallable, need to refetch failed AllEmotess
+    let emojis = client.emojis.cache;  //Cache isn't infallible, need to refetch failed Emotes
     let guildEmojis = message.guild.emojis.cache;
 
     let filteredEmojis = emojis.filter(emoji => match.includes(`:${emoji.name}:`));
@@ -138,6 +135,6 @@ const sendFixedMessage = (message, author, webhook, threadId) => {
         avatarURL: author.displayAvatarURL({ format: 'png', size: 1024 }),
         threadId: threadId
     }).catch(e => {
-        console.error(e);
+        console.error(`whoops: ${e}`);
     });
 };

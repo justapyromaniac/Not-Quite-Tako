@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const {Collection} = require('discord.js');
+const path = require('path');
 const fs = require('fs');
 const dotenv_1 = __importDefault(require("dotenv"));
 const messageReader_1 = __importDefault(require("./listeners/messageReader"));
@@ -24,7 +25,7 @@ const client = new discord_js_1.Client({
 
 client.commands = new Collection();
 client.webhook = new Collection();
-const slashFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const slashFiles = fs.readdirSync(path.resolve(__dirname, './commands')).filter(file => file.endsWith('.js'));
 
 for (const sfile of slashFiles) {
     const slashed = require(`./commands/${sfile}`);
