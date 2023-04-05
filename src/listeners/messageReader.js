@@ -106,7 +106,7 @@ const fetchWebhook = async (message) => {
 };
 
 const fixPoorMessage = async (message, client) => {
-    let match = message.content.match(/(?!<a?):[^<:>\s]+?:(?!\d+>)/g);
+    let match = message.content.match(/(?!<a?|`.*):[^<:>\s]+?:(?!\d+>|.*`)/g);
     if (match === null) { return undefined; }
     let emojis = client.emojis.cache;  //Cache isn't infallible, need to refetch failed Emotes
     let guildEmojis = message.guild.emojis.cache;
@@ -117,8 +117,7 @@ const fixPoorMessage = async (message, client) => {
     if (filteredEmojis.size > 0) {
         output = message.content;
         for (const emoji of filteredEmojis.values()) {
-            output = output.replace(new RegExp(`(?!<a?):${emoji.name}:(?!\\d+>)`, "g"), `<${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}>`);
-
+            output = output.replace(new RegExp(`(?!<a?|.*\`):${emoji.name}:(?!\\d+>|.*\`)`, "g"), `<${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}>`);
         }
     }
 
