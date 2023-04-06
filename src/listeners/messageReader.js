@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 
 let cooldown = new Map();
-const AP = new Date("2023-03-31T20:00:00Z");
+const APBegin = new Date("2023-03-31T20:00:00Z");
+const APEnd = new Date("2023-04-02T07:00:00Z");
 
 exports.default = (client) => {
     client.on("messageCreate", async (message) => {
@@ -12,15 +13,11 @@ exports.default = (client) => {
         }
 
         //If cooldown is not active and the server is the Tentacult then run the reacts function.
-        if (Date.now() >= Date.parse(AP)) {
-            if (!cooldown.has("R") && message.guild.id == `753099492554702908`) {
-
-                await Reacts(message, client);
-            }
+        if (!cooldown.has("R") && message.guild.id == `753099492554702908`) {
+            await Reacts(message, client);
         }
 
-        //Yes there's a lot of exclamation marks, they're all guarded but typescript is a bit dumb sometimes.
-        if (message.content.match(/(?!<a?):[^<:>]+?:(?!\d+>)/g) === null) {
+        if (message.content.match(/(?!<a?|`.*):[^<:>\s]+?:(?!\d+>|.*`)/g) === null) {
             return;
         }
 
@@ -37,10 +34,19 @@ function randomnum(min, max) {
 const Reacts = async (message, client) => {
 
     //Gets a number between 0 and 99.
-    var rand = randomnum(0, 100);
+    let rand = randomnum(0, 100);
+    let chance = 1;
 
-    //If less or equals 4 then checks the 5% (30% for April Fools)
-    if (rand <= 29) {
+    if ((Date.now() >= Date.parse(APBegin)) && (Date.now() <= Date.parse(APEnd))) {
+        chance = 29;
+    }
+
+    if (message.content.toLowerCase().includes(`nqt`)) {
+        chance = 9;
+    }
+
+    //Checks the 2% (30% for April Fools)
+    if (rand <= chance) {
 
         //var TakoEmotes = client.emojis.cache.filter(emoji => emoji.guild.name.includes(`Tentacult`));
 
@@ -87,14 +93,12 @@ const fetchWebhook = async (message) => {
     const webhooks = await message.guild.fetchWebhooks();
     let notQuiteTako = webhooks.find(webhook => webhook.name === webhookName);
 
-    //The dm check is purely to remove dm channel from the channel union type, bc the bot doesn't work in dms ANYWAY
-
     if (notQuiteTako === undefined && message.channel.type !== "DM") {
         if (message.channel.isThread()) {
-            notQuiteTako = await message.channel.parent.createWebhook(webhookName);
+            notQuiteTako = await message.channel.parent.createWebhook({ name: webhookName });
         }
         else {
-            notQuiteTako = await message.channel.createWebhook(webhookName);
+            notQuiteTako = await message.channel.createWebhook({ name: webhookName });
         }
     }
 
@@ -109,9 +113,9 @@ const fetchWebhook = async (message) => {
 };
 
 const fixPoorMessage = async (message, client) => {
-    let match = message.content.match(/(?!<a?):[^<:>]+?:(?!\d+>)/g);
+    let match = message.content.match(/(?!<a?|`.*):[^<:>\s]+?:(?!\d+>|.*`)/g);
     if (match === null) { return undefined; }
-    let emojis = client.emojis.cache;  //Cache isn't infallable, need to refetch failed AllEmotess
+    let emojis = client.emojis.cache;  //Cache isn't infallible, need to refetch failed Emotes
     let guildEmojis = message.guild.emojis.cache;
 
     let filteredEmojis = emojis.filter(emoji => match.includes(`:${emoji.name}:`));
@@ -120,8 +124,7 @@ const fixPoorMessage = async (message, client) => {
     if (filteredEmojis.size > 0) {
         output = message.content;
         for (const emoji of filteredEmojis.values()) {
-            output = output.replace(new RegExp(`(?!<a?):${emoji.name}:(?!\\d+>)`, "g"), `<${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}>`);
-
+            output = output.replace(new RegExp(`(?!<a?|.*\`):${emoji.name}:(?!\\d+>|.*\`)`, "g"), `<${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}>`);
         }
     }
 
@@ -138,6 +141,6 @@ const sendFixedMessage = (message, author, webhook, threadId) => {
         avatarURL: author.displayAvatarURL({ format: 'png', size: 1024 }),
         threadId: threadId
     }).catch(e => {
-        console.error(e);
+        console.error(`whoops: ${e}`);
     });
 };
