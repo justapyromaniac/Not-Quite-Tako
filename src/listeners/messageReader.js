@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 
 let cooldown = new Map();
-const AP = new Date("2023-03-31T20:00:00Z");
+const APBegin = new Date("2023-03-31T20:00:00Z");
+const APEnd = new Date("2023-04-02T07:00:00Z");
 
 exports.default = (client) => {
     client.on("messageCreate", async (message) => {
@@ -12,11 +13,8 @@ exports.default = (client) => {
         }
 
         //If cooldown is not active and the server is the Tentacult then run the reacts function.
-        if (Date.now() >= Date.parse(AP)) {
-            if (!cooldown.has("R") && message.guild.id == `753099492554702908`) {
-
-                await Reacts(message, client);
-            }
+        if (!cooldown.has("R") && message.guild.id == `753099492554702908`) {
+            await Reacts(message, client);
         }
 
         if (message.content.match(/(?!<a?|`.*):[^<:>\s]+?:(?!\d+>|.*`)/g) === null) {
@@ -36,10 +34,19 @@ function randomnum(min, max) {
 const Reacts = async (message, client) => {
 
     //Gets a number between 0 and 99.
-    var rand = randomnum(0, 100);
+    let rand = randomnum(0, 100);
+    let chance = 1;
 
-    //If less or equals 4 then checks the 5% (30% for April Fools)
-    if (rand <= 29) {
+    if ((Date.now() >= Date.parse(APBegin)) && (Date.now() <= Date.parse(APEnd))) {
+        chance = 29;
+    }
+
+    if (message.content.toLowerCase().includes(`nqt`)) {
+        chance = 9;
+    }
+
+    //Checks the 2% (30% for April Fools)
+    if (rand <= chance) {
 
         //var TakoEmotes = client.emojis.cache.filter(emoji => emoji.guild.name.includes(`Tentacult`));
 
@@ -88,10 +95,10 @@ const fetchWebhook = async (message) => {
 
     if (notQuiteTako === undefined && message.channel.type !== "DM") {
         if (message.channel.isThread()) {
-            notQuiteTako = await message.channel.parent.createWebhook({name: webhookName});
+            notQuiteTako = await message.channel.parent.createWebhook({ name: webhookName });
         }
         else {
-            notQuiteTako = await message.channel.createWebhook({name: webhookName});
+            notQuiteTako = await message.channel.createWebhook({ name: webhookName });
         }
     }
 
