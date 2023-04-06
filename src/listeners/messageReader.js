@@ -21,7 +21,7 @@ exports.default = (client) => {
             return;
         }
 
-        await NQT(message, client); //Moved NQT main function to make the code more organized with the adition of reacts.
+        await NQT(message, client); //Moved NQT main function to make the code more organized with the addition of reacts.
 
         return;
     });
@@ -77,7 +77,7 @@ const NQT = async (message, client) => {
     if (fixedMessage === undefined) { return; }
 
     const webhook = await fetchWebhook(message);
-
+    
     //Changed the if here so it looks a bit cleaner. (Nx)
     sendFixedMessage(fixedMessage, message.member, webhook, (message.channel.isThread() ? message.channelId : undefined));
 
