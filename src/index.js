@@ -24,12 +24,20 @@ const client = new discord_js_1.Client({
 });
 
 client.commands = new Collection();
+client.passives = new Collection();
 client.webhook = new Collection();
 const slashFiles = fs.readdirSync(path.resolve(__dirname, './commands')).filter(file => file.endsWith('.js'));
 
 for (const sfile of slashFiles) {
     const slashed = require(`./commands/${sfile}`);
     client.commands.set(slashed.data.name, slashed);
+}
+
+const passiveFiles = fs.readdirSync(path.resolve(__dirname, './passives')).filter(file => file.endsWith('.js'));
+
+for (const pfile of passiveFiles) {
+    const passive = require(`./passives/${pfile}`);
+    client.passives.set(passive.data.name, passive);
 }
 
 dotenv_1.default.config();
