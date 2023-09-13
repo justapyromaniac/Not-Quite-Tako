@@ -6,7 +6,7 @@ module.exports = {
     async execute(message) {
         const client = message.client;
 
-        if(message.content.includes(`<@978098134767009843>`)){
+        if(message.mentions.users.some(user => user.id === client.user.id)){
             message.channel.send(`<:InaHi:1064654919262535800> <:rockdachi:1011431424601116804>`)
         }
 
