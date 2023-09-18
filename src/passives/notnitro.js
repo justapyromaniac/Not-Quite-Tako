@@ -29,7 +29,7 @@ const NQT = async (message, client) => {
 //So thank karim for your audit logs not becoming cluttered
 //Signed, Pyro
 const fetchWebhook = async (message) => {
-    const webhookName = process.env.WEBHOOK_NAME;
+    const webhookName = process.env.WEBHOOK_NAME; console.log(process.env.WEBHOOK_NAME);
     const webhooks = await message.guild.fetchWebhooks();
     let notQuiteTako = webhooks.find(webhook => webhook.name === webhookName);
 

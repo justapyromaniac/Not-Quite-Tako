@@ -1,4 +1,4 @@
-const { randomnum } = require('../functions.js');
+const { randomnum } = require('../functions/functions.js');
 let cooldown = new Map();
 const APBegin = new Date("2023-03-31T20:00:00Z");
 const APEnd = new Date("2023-04-02T07:00:00Z");
