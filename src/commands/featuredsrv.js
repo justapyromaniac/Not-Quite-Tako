@@ -4,6 +4,7 @@ const serverbuttons = './serverbuttons.json';
 const fs = require('fs');
 
 module.exports = {
+    type: "tako",
     data: new SlashCommandBuilder()
         .setName(`featuredsrv`)
         .setDescription(`For editing, creating and posting featured servers information and invites.`)
@@ -25,11 +26,15 @@ module.exports = {
                 .addNumberOption(option =>
                     option.setName(`row`)
                         .setDescription(`The row of the button, top to bottom. (Min: 1, Max: 5)`)
+                        .setMaxValue(5)
+                        .setMinValue(1)
                         .setRequired(true)
                 )
                 .addNumberOption(option =>
                     option.setName(`column`)
                         .setDescription(`The column of the button, left to right. (Min: 1, Max: 5)`)
+                        .setMaxValue(5)
+                        .setMinValue(1)
                         .setRequired(true)
                 )
                 .addStringOption(option =>
@@ -50,11 +55,12 @@ module.exports = {
                 )
         ),
     async execute(interaction) {
+        
+        await interaction.deferReply({ ephemeral: true });
         const client = interaction.client;
 
         //POST ALL INVITES
         const postInvites = async (interaction, client) => {
-            console.log(`Post invites.`);
 
             const webhook = await fetchWebhook(interaction);
 
@@ -171,15 +177,10 @@ module.exports = {
         //MANAGE BUTTONS (EDIT,CREATE)
         if (interaction.options.getSubcommand() === `managebuttons`) {
 
-            await interaction.deferReply({ ephemeral: true });
-
             var mesid = interaction.options.getString(`messageid`);
             var row = interaction.options.getNumber(`row`) - 1;
             var column = interaction.options.getNumber(`column`) - 1;
-            if (row > 4 || column > 4 || row < 0 || column < 0) {
-                return interaction.editReply({ content: `Rows and columns start at 1 with a max of 5.`, ephemeral: true })
-            }
-
+   
             var newname = interaction.options.getString(`newname`);
             var newlink = interaction.options.getString(`newlink`);
             var newmark = interaction.options.getString(`newmark`) ? interaction.options.getString(`newmark`) : "║";

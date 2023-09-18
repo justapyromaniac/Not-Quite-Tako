@@ -22,15 +22,20 @@ for (const file of ffiles) {
 }
 
 module.exports = {
+    type: "dev",
     data: new SlashCommandBuilder()
         .setName('reload')
         .setDescription('Reload the given slash command.')
         .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
         .addStringOption(option => option.setName('command').setDescription('The command to be reloaded.').setRequired(true).addChoices(...coption)),
-    type: "dev",
     async execute(interaction) {
+        await interaction.deferReply();
 
         const mesmember = interaction.member;
+        if (!((mesmember.id == `284926618714243074`) || (mesmember.id == `366608657259167744`))) {
+            return interaction.editReply('NQT developers only.')
+        }
+
         let client = interaction.client;
 
         let cName = interaction.options.getString('command');
@@ -41,8 +46,8 @@ module.exports = {
             const cpath = Object.keys(require.cache).find(f => wordInString(`${f}`, `${cName}`))
 
             if (cpath != undefined) {
-                var typepath = cpath.slice(0, cpath.lastIndexOf("\\")); //CHANGE THE BACK SLASH TO NORMAL SLASH
-                typepath = typepath.slice(typepath.lastIndexOf('\\') + 1)
+                var typepath = cpath.slice(0, cpath.lastIndexOf("/")); //CHANGE THE BACK SLASH TO NORMAL SLASH
+                typepath = typepath.slice(typepath.lastIndexOf('/') + 1)
 
                 console.log(cpath, typepath);
 
@@ -91,34 +96,34 @@ module.exports = {
                     switch (typepath) {
                         case `commands`: {
                             const push = require(`${pathfind}`)
-                            client.commands.commands.set(cName, push)
+                            client.commands.set(cName, push)
                             FinalType = `Slash`
                             break;
                         }
                         case `passives`: {
                             const push = require(`${pathfind}`)
-                            client.commands.passives.set(cName, push)
+                            client.passives.set(cName, push)
                             FinalType = `Passive`
                             break;
                         }
                         case `functions`: {
                             const push = require(`${pathfind}`)
-                            client.commands.slash.set(cName, push)
+                            client.functions.set(cName, push)
                             FinalType = `Function`
                             break;
                         }
                     }
 
                 } else {
-                    interaction.reply(`Command does not exist: **${cName}**`)
+                    interaction.editReply(`Command does not exist: **${cName}**`)
                 }
             }
 
         } catch (e) {
             console.log(e);
-            return interaction.reply(`Unable to reload the command **${cName}**`)
+            return interaction.editReply(`Unable to reload the command **${cName}**`)
         }
-        interaction.reply(`¡${FinalType} command **${cName}** reloaded!`)
+        interaction.editReply(`¡${FinalType} command **${cName}** reloaded!`)
 
     },
 };
