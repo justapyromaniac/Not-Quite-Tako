@@ -11,6 +11,8 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const messageReader_1 = __importDefault(require("./listeners/messageReader"));
 const slashReader_1 = __importDefault(require("./listeners/slashReader"));
 const ready_1 = __importDefault(require("./listeners/ready"));
+//const cron_1 = __importDefault(require("./cron"));
+
 console.log("Not Quite Tako is waking up...");
 
 const client = new discord_js_1.Client({
@@ -25,6 +27,7 @@ const client = new discord_js_1.Client({
 
 client.commands = new Collection();
 client.passives = new Collection();
+client.functions = new Collection();
 client.webhook = new Collection();
 const slashFiles = fs.readdirSync(path.resolve(__dirname, './commands')).filter(file => file.endsWith('.js'));
 
@@ -40,8 +43,16 @@ for (const pfile of passiveFiles) {
     client.passives.set(passive.data.name, passive);
 }
 
+const functionFiles = fs.readdirSync(path.resolve(__dirname, './functions')).filter(file => file.endsWith('.js'));
+
+for (const ffile of functionFiles) {
+    const funct = require(`./functions/${ffile}`);
+    client.functions.set(ffile.replace(`.js`,``),funct);
+}
+
 dotenv_1.default.config();
 (0, ready_1.default)(client);
 (0, messageReader_1.default)(client);
 (0, slashReader_1.default)(client);
+//(0, cron_1.default)(client);
 client.login(process.env.TOKEN);
