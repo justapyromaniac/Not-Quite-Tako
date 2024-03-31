@@ -144,8 +144,16 @@ module.exports = {
                 }).catch(e => {
                     console.error(`whoops: ${e}`);
                 });
-            });
 
+                await webhook.send({
+                    content: `**If clicking a button gives you an "invite link is invalid or has expired" message be sure to refresh your discord. Ctrl + R should do the trick. <a:TakozillaPat:807766293347434547>\nIf for some reason that doesn't work. Please try copying the link from the button into your preferred browser <:InaHeart:767850477064290374>**`,
+                    username: "Note",
+                    avatarURL: `https://cdn.discordapp.com/attachments/1042098513082851331/1140205844080906300/wide_tako.png`
+                }).catch(e => {
+                    console.error(`whoops: ${e}`);
+                });
+
+            });       
         };
 
         const fetchWebhook = async (interaction) => {
