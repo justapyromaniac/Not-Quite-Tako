@@ -1,3 +1,4 @@
+let AllWebhooks = new Map();
 module.exports = {
         data: {
             name: 'notnitro',
@@ -29,9 +30,16 @@ const NQT = async (message, client) => {
 //So thank karim for your audit logs not becoming cluttered
 //Signed, Pyro
 const fetchWebhook = async (message) => {
-    const webhookName = process.env.WEBHOOK_NAME; console.log(process.env.WEBHOOK_NAME);
-    const webhooks = await message.guild.fetchWebhooks();
-    let notQuiteTako = webhooks.find(webhook => webhook.name === webhookName);
+    const webhookName = process.env.WEBHOOK_NAME; 
+    let notQuiteTako;
+    if(AllWebhooks.has(message.guild.id)){
+        const NQTLocal = AllWebhooks.get(message.guild.id);
+        notQuiteTako = await client.fetchWebhook(NQTLocal);
+    }else{
+        const webhooks = await message.guild.fetchWebhooks();
+        notQuiteTako = webhooks.find(webhook => webhook.name === webhookName);
+        AllWebhooks.set(message.guild.id, notQuiteTako.id);
+    }
 
     //TEMP
     if (notQuiteTako === undefined /*&& message.channel.type !== "DM"*/) {
@@ -43,14 +51,10 @@ const fetchWebhook = async (message) => {
         }
     }
 
-    //Just one check here it seems to be just fine. (Nx)
-    if (message.channel.isThread()) {
-        return await notQuiteTako.edit({ channel: message.channel.parentId });
-    }
-    else {
-        return await notQuiteTako.edit({ channel: message.channelId });
-    }
-
+    //This looks better
+    const editOptions = { channel: message.channel.isThread() ? message.channel.parentId : message.channelId };
+    await notQuiteTako.edit(editOptions);
+    return notQuiteTako;
 };
 
 const fixPoorMessage = async (message, client) => {
