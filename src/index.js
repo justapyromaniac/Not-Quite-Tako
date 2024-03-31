@@ -11,7 +11,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const messageReader_1 = __importDefault(require("./listeners/messageReader"));
 const slashReader_1 = __importDefault(require("./listeners/slashReader"));
 const ready_1 = __importDefault(require("./listeners/ready"));
-//const cron_1 = __importDefault(require("./cron"));
+const cron_1 = __importDefault(require("./cron"));
 
 console.log("Not Quite Tako is waking up...");
 
@@ -54,5 +54,5 @@ dotenv_1.default.config();
 (0, ready_1.default)(client);
 (0, messageReader_1.default)(client);
 (0, slashReader_1.default)(client);
-//(0, cron_1.default)(client);
+(0, cron_1.default)(client);
 client.login(process.env.TOKEN);
