@@ -2,7 +2,7 @@
 
 A little emote helper bot for all those nitroless people on discord!
 
-Created by justapyromaniac (me), with help from NxKarim (they also host the bot atm)
+Created by justapyromaniac and NxKarim.
 
 ## FAQ
 
@@ -10,5 +10,5 @@ Created by justapyromaniac (me), with help from NxKarim (they also host the bot 
 Make sure your @everyone role is allowed to use external emotes. 
 Discord uses this role for webhook perms, so it needs to be on for the webhook to use external emotes
 
-### All my choco chip cookies are gone
+### All my cookies are gone
 NQT is still quite a Tako, so it eats cookies.
