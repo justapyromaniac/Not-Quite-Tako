@@ -8,6 +8,7 @@ const path = require('path');
 const fs = require('fs');
 const dotenv = require('dotenv');
 const messageReader = require("./listeners/messageReader").default;
+const messageUpdateReader = require("./listeners/messageUpdateReader").default;
 const slashReader = require("./listeners/slashReader").default;
 const ready = require("./listeners/ready").default;
 
@@ -43,5 +44,6 @@ for (const pfile of passiveFiles) {
 dotenv.config();
 ready(client);
 messageReader(client);
+messageUpdateReader(client);
 slashReader(client);
 client.login(process.env.TOKEN);

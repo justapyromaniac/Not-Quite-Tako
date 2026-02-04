@@ -8,6 +8,7 @@ const path = require('path');
 const fs = require('fs');
 const dotenv = require('dotenv');
 const messageReader = require("./src/listeners/messageReader").default;
+const messageUpdateReader = require("./src/listeners/messageUpdateReader").default;
 const slashReader = require("./src/listeners/slashReader").default;
 const ready = require("./src/listeners/ready").default;
 
@@ -35,5 +36,6 @@ for (const sfile of slashFiles) {
 dotenv.config();
 ready(client);
 messageReader(client);
+messageUpdateReader(client);
 slashReader(client);
 client.login(process.env.TOKEN);
