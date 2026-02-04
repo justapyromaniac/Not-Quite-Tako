@@ -13,12 +13,56 @@ module.exports = {
     
 const NQT = async (message, client) => {
 
-    const fixedMessage = await fixPoorMessage(message, client);
+    let fixedMessage = await fixPoorMessage(message, client);
     if (fixedMessage === undefined) { return; }
 
     const webhook = await fetchWebhook(message);
 
-    //Changed the if here so it looks a bit cleaner. (Nx)
+    if (message.reference && message.reference.messageId) {
+        try {
+            const repliedMessage = await message.channel.messages.fetch(message.reference.messageId);
+            const rawLink = `https://discord.com/channels/${message.guildId}/${message.channelId}/${message.reference.messageId}`;
+            
+            let excerpt = "";
+            let content = repliedMessage.content;
+
+            if (content && !content.includes('||')) {
+                const parts = content.split(/(<a?:.+?:\d+>)/g);
+                let count = 0;
+                let excerptPart = "";
+                
+                for (const part of parts) {
+                    if (part.match(/<a?:.+?:\d+>/)) {
+                        if (count < 20) {
+                            excerptPart += part;
+                            count++;
+                        }
+                    } else {
+                        for (const char of Array.from(part)) {
+                            if (count < 20) {
+                                excerptPart += char;
+                                count++;
+                            } else {
+                                break;
+                            }
+                        }
+                    }
+                    if (count >= 20) break;
+                }
+
+                const totalLength = Array.from(content.replace(/<a?:.+?:\d+>/g, 'E')).length;
+                if (totalLength > 20) excerptPart += "...";
+                
+                excerpt = ` (${excerptPart})`;
+            }
+
+            fixedMessage = `${rawLink}${excerpt}\n${fixedMessage}`;
+        } catch (e) {
+            const rawLink = `https://discord.com/channels/${message.guildId}/${message.channelId}/${message.reference.messageId}`;
+            fixedMessage = `${rawLink}\n${fixedMessage}`;
+        }
+    }
+
     sendFixedMessage(fixedMessage, message.member, webhook, (message.channel.isThread() ? message.channelId : undefined));
 
     message.delete();
@@ -107,8 +151,11 @@ const sendFixedMessage = (message, author, webhook, threadId) => {
     webhook.send({
         content: message,
         username: author.displayName,
-        avatarURL: author.displayAvatarURL({ format: 'png', size: 1024 }),
-        threadId: threadId
+        avatarURL: author.displayAvatarURL({ extension: 'png', size: 1024 }),
+        threadId: threadId,
+        allowedMentions: {
+            replied_user: false
+        }
     }).catch(e => {
         console.error(`whoops: ${e}`);
     });

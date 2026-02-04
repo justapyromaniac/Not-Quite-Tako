@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { ActionRowBuilder, ButtonBuilder , ButtonStyle, ComponentType} = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder , ButtonStyle, ComponentType, MessageFlags } = require('discord.js');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('emojis')
@@ -43,28 +43,38 @@ module.exports = {
                 },
             };
 
-            await interaction.reply({ embeds: [emoteEmbed], components: [rowb], fetchReply: true, ephemeral: true });
-            const collector = interaction.channel.createMessageComponentCollector({ componentType: ComponentType.Button, time: 200000 });
+            await interaction.deferReply({ flags: [MessageFlags.Ephemeral] });
+
+            const collector = interaction.channel.createMessageComponentCollector({ 
+                componentType: ComponentType.Button, 
+                time: 200000,
+                filter: i => i.user.id === interaction.user.id
+            });
             let co = 0, guildoutputs = [], guildnames = [];
 
             let allguilds = client.guilds.cache.values();
 
             for (const guild of allguilds) {
-                let emojis, output = ``;
-                emojis = guild.emojis.cache;
+                let emojis = guild.emojis.cache;
                 if (guild.id == interaction.guildId) { emojis = emojis.filter(em => em.animated == true); }
                 
                 if (emojis.size === 0) continue;
 
-                for (const emoji of emojis.values()) { output += `<${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}> \`\`:${emoji.name}:\`\`\n`; }
-                
-                const matches = output.match(/[\s\S]{1,5000}(?=\n)/g);
-                if (!matches) continue;
-
-                for(let pages of matches){
-                    guildnames.push(guild.name);
-                    guildoutputs.push(pages.match(/[\s\S]{1,1024}(?=\n)/g));
+                let currentField = "";
+                let fields = [];
+                for (const emoji of emojis.values()) {
+                    const line = `<${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}> \`\`:${emoji.name}:\`\`\n`;
+                    if ((currentField + line).length > 1024) {
+                        fields.push(currentField);
+                        currentField = line;
+                    } else {
+                        currentField += line;
+                    }
                 }
+                if (currentField) fields.push(currentField);
+
+                guildnames.push(guild.name);
+                guildoutputs.push(fields);
             }
 
             let listnum = guildoutputs.length - 1;
@@ -73,8 +83,10 @@ module.exports = {
                 return interaction.editReply({ content: 'No accessible emojis found.', embeds: [], components: [] });
             }
 
+            await interaction.editReply({ embeds: [emoteEmbed], components: [rowb] });
+
             collector.on('collect', async i => {
-                if (i.user.id === interaction.user.id) {
+                try {
                     switch (i.customId) {
                         case `fow`: {
                             co += 1;
@@ -123,9 +135,8 @@ module.exports = {
                             break;
                         }
                     }
-
-                } else {
-                    return;
+                } catch (error) {
+                    console.error('Error in emoji collector:', error);
                 }
             });
 
