@@ -12,7 +12,12 @@ exports.default = (client) => {
             await slash.execute(interaction);
         } catch (error) {
             console.error(error);
-            await interaction.reply({ content: 'An error has ocurred.', ephemeral: true });
+            const content = 'An error has ocurred.';
+            if (interaction.replied || interaction.deferred) {
+                await interaction.editReply({ content });
+            } else {
+                await interaction.reply({ content, ephemeral: true });
+            }
         }
     });
 };

@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const { Events } = require('discord.js');
 exports.default = (client) => {
-    client.on("ready", async () => {
+    client.on(Events.ClientReady, async () => {
         if (!client.user || !client.application) {
             return;
         }

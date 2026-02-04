@@ -53,15 +53,25 @@ module.exports = {
                 let emojis, output = ``;
                 emojis = guild.emojis.cache;
                 if (guild.id == interaction.guildId) { emojis = emojis.filter(em => em.animated == true); }
+                
+                if (emojis.size === 0) continue;
+
                 for (const emoji of emojis.values()) { output += `<${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}> \`\`:${emoji.name}:\`\`\n`; }
-                output = output.match(/[\s\S]{1,5000}(?=\n)/g);
-                for(let pages of output){
+                
+                const matches = output.match(/[\s\S]{1,5000}(?=\n)/g);
+                if (!matches) continue;
+
+                for(let pages of matches){
                     guildnames.push(guild.name);
                     guildoutputs.push(pages.match(/[\s\S]{1,1024}(?=\n)/g));
                 }
             }
 
             let listnum = guildoutputs.length - 1;
+
+            if (listnum < 0) {
+                return interaction.editReply({ content: 'No accessible emojis found.', embeds: [], components: [] });
+            }
 
             collector.on('collect', async i => {
                 if (i.user.id === interaction.user.id) {
@@ -83,7 +93,7 @@ module.exports = {
                                 }
                             }
 
-                            await interaction.editReply({ embeds: [emoteEmbed], components: [rowb], ephemeral: true }).then(t => i.deferUpdate())
+                            await i.update({ embeds: [emoteEmbed], components: [rowb] });
 
                             break;
                         }
@@ -104,12 +114,12 @@ module.exports = {
                                 }
                             }
 
-                            await interaction.editReply({ embeds: [emoteEmbed], components: [rowb], ephemeral: true }).then(t => i.deferUpdate())
+                            await i.update({ embeds: [emoteEmbed], components: [rowb] });
 
                             break;
                         }
                         case `cancel`: {
-                            await interaction.editReply({ embeds: [emoteEmbed], components: [] })
+                            await i.update({ embeds: [emoteEmbed], components: [] })
                             break;
                         }
                     }
