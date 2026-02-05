@@ -31,7 +31,7 @@
       ]
     ],
     "avatar": "https://cdn.discordapp.com/attachments/1042098513082851331/1140781076067926127/holo.png",
-    "banner": "https://cdn.discordapp.com/attachments/1042098513082851331/1142142632043225098/InaServerBannerNonGen.png",
+    "banner": "gen0.png",
     "name": "Hololive Non-Gen"
   },
   "gamers": {
@@ -56,7 +56,7 @@
       ]
     ],
     "avatar": "https://cdn.discordapp.com/attachments/1042098513082851331/1140779770498535544/gamers.png",
-    "banner": "https://cdn.discordapp.com/attachments/1042098513082851331/1142142672019132477/InaServerBannerGamers.png",
+    "banner": "hologamers.png",
     "name": "Hololive Gamers"
   },
   "gen1": {
@@ -81,7 +81,7 @@
       ]
     ],
     "avatar": "https://cdn.discordapp.com/attachments/1042098513082851331/1140781076067926127/holo.png",
-    "banner": "https://cdn.discordapp.com/attachments/1042098513082851331/1142142701358288936/InaServerBannerGen1.png",
+    "banner": "gen1.png",
     "name": "Hololive Gen 1"
   },
   "gen2": {
@@ -110,7 +110,7 @@
       ]
     ],
     "avatar": "https://cdn.discordapp.com/attachments/1042098513082851331/1140781076067926127/holo.png",
-    "banner": "https://cdn.discordapp.com/attachments/1042098513082851331/1142142733910290604/InaServerBannerGen2.png",
+    "banner": "gen2.png",
     "name": "Hololive Gen 2"
   },
   "gen3": {
@@ -135,7 +135,7 @@
       ]
     ],
     "avatar": "https://cdn.discordapp.com/attachments/1042098513082851331/1140781076067926127/holo.png",
-    "banner": "https://cdn.discordapp.com/attachments/1042098513082851331/1142142769708683314/InaServerBannerGen3.png",
+    "banner": "gen3.png",
     "name": "Hololive Gen 3"
   },
   "gen4": {
@@ -170,7 +170,7 @@
       ]
     ],
     "avatar": "https://cdn.discordapp.com/attachments/1042098513082851331/1140781076067926127/holo.png",
-    "banner": "https://cdn.discordapp.com/attachments/1042098513082851331/1142142805519646840/fourthgen.png",
+    "banner": "gen4.png",
     "name": "Hololive Gen 4 "
   },
   "gen5": {
@@ -181,7 +181,7 @@
           "☃️"
         ],
         [
-          "https://discord.gg/nenepro",
+          "https://discord.com/invite/V9DMcx7",
           "🍑🥟"
         ],
         [
@@ -195,7 +195,7 @@
       ]
     ],
     "avatar": "https://cdn.discordapp.com/attachments/1042098513082851331/1140781076067926127/holo.png",
-    "banner": "https://cdn.discordapp.com/attachments/1042098513082851331/1142142833399185548/InaServerBannerGen5.png",
+    "banner": "gen5.png",
     "name": "Hololive Gen 5"
   },
   "gen6": {
@@ -220,7 +220,7 @@
           "🧪"
         ],
         [
-          "https://discord.gg/chloeaquarium",
+          "https://discord.com/invite/ApKDNsDMm6",
           "🎣"
         ],
         [
@@ -230,8 +230,54 @@
       ]
     ],
     "avatar": "https://cdn.discordapp.com/attachments/1042098513082851331/1140779769810669681/holox.png",
-    "banner": "https://cdn.discordapp.com/attachments/1042098513082851331/1140205844080906300/wide_tako.png",
-    "name": "Hololive Gen 6"
+    "banner": "holox.png",
+    "name": "Hololive Gen 6 HoloX"
+  },
+  "regloss": {
+    "rows": [
+      [
+        [
+          "https://discord.gg/kKy2WGDbhX",
+          "🎹 ✨"
+        ],
+        [
+          "https://discord.gg/JRKfV2aDWH",
+          "🌃"
+        ],
+        [
+          "https://discord.gg/4Bv6dYWafQ",
+          "🐧⚡"
+        ]
+      ]
+    ],
+    "avatar": "https://cdn.discordapp.com/attachments/1152788031489712128/1155655813319364658/image-removebg-preview.png",
+    "banner": "holoregloss.png",
+    "name": "Hololive DEV_IS Regloss"
+  },
+  "flowglow": {
+    "rows": [
+      [
+        [
+          "https://discord.gg/UDQGaQbzDX",
+          "💬🔁💙"
+        ],
+        [
+          "https://discord.gg/K2GBeherXA",
+          "☺️🐅"
+        ],
+        [
+          "https://discord.gg/EnfdYJG26B",
+          "💅✨"
+        ],
+        [
+          "https://discord.gg/wKnSh4yfSt",
+          "🎤👑"
+        ]
+      ]
+    ],
+    "avatar": "https://cdn.discordapp.com/attachments/1152788031489712128/1155655813319364658/image-removebg-preview.png",
+    "banner": "flow-glow.png",
+    "name": "Hololive DEV_IS Flow Glow"
   },
   "id": {
     "rows": [
@@ -255,21 +301,21 @@
       ],
       [
         [
-          "https://discord.gg/zomrades",
-          "🧟‍♀️"
-        ],
-        [
           "https://discord.gg/melfrens",
           "🍂"
         ],
         [
           "https://discord.gg/merakyats",
           "🦚"
+        ],
+        [
+          "https://discord.gg/operationv7",
+          "📜"
         ]
       ]
     ],
     "avatar": "https://cdn.discordapp.com/attachments/1042098513082851331/1140781076067926127/holo.png",
-    "banner": "https://cdn.discordapp.com/attachments/1042098513082851331/1142142882548023317/holoid.png",
+    "banner": "holoid.png",
     "name": "Hololive Indonesia"
   },
   "myth": {
@@ -288,7 +334,7 @@
           "🔎"
         ],
         [
-          "https://discord.gg/shaak",
+          "https://discord.gg/GawrGura",
           "🔱"
         ]
       ],
@@ -308,7 +354,7 @@
       ]
     ],
     "avatar": "https://cdn.discordapp.com/attachments/1042098513082851331/1140779769345093723/myth.png",
-    "banner": "https://cdn.discordapp.com/attachments/1042098513082851331/1142142991688015872/Holoen.png",
+    "banner": "holomyth.png",
     "name": "Hololive EN Myth"
   },
   "council": {
@@ -317,10 +363,6 @@
         [
           "https://discord.gg/7HStwRrNrq",
           "🪐"
-        ],
-        [
-          "https://discord.gg/YKeM3hnjvn",
-          "🌿"
         ],
         [
           "https://discord.gg/ourokronii",
@@ -333,10 +375,6 @@
       ],
       [
         [
-          "https://discord.gg/mPcpPH32d4",
-          "🪶"
-        ],
-        [
           "https://discord.gg/hoomanity",
           "🪶"
         ],
@@ -347,12 +385,16 @@
         [
           "https://discord.gg/baerats",
           "🎲"
+        ],
+        [
+          "https://discord.gg/3HCVPXzWUU",
+          "🪐"
         ]
       ]
     ],
-    "avatar": "https://cdn.discordapp.com/attachments/1042098513082851331/1140779768900489308/council.png",
-    "banner": "https://cdn.discordapp.com/attachments/1042098513082851331/1140205844080906300/wide_tako.png",
-    "name": "Hololive EN Council"
+    "avatar": "https://cdn.discordapp.com/attachments/1255700316909998170/1255700407712354374/Q56t1Qp.png?ex=667e15a2&is=667cc422&hm=9f820043027d67681e9fd58110d7d6b704f971dff2977f34c0b16f092358c6e5&",
+    "banner": "holopromise.png",
+    "name": "Hololive EN Promise and Council"
   },
   "advent": {
     "rows": [
@@ -360,10 +402,6 @@
         [
           "https://discord.gg/pebblecord",
           "🗿"
-        ],
-        [
-          "https://discord.gg/shiori-library",
-          "👁‍🗨"
         ],
         [
           "https://discord.gg/novelites",
@@ -377,17 +415,50 @@
           "https://discord.gg/ruffians",
           "🐾"
         ]
+      ]
+    ],
+    "avatar": "https://cdn.discordapp.com/attachments/1255700316909998170/1255700408349753465/qX9IWQO.png?ex=667e15a3&is=667cc423&hm=f75799f079f8679bb7b1d6360a8961d22e20ef29a18ddd3ba911d1442452407c&",
+    "banner": "holoadvent.png",
+    "name": "Hololive EN Advent"
+  },
+  "justice": {
+    "rows": [
+      [
+        [
+          "https://discord.gg/immerheim",
+          "🍵"
+        ],
+        [
+          "https://discord.gg/cecilia-workshop",
+          "🍵"
+        ],
+        [
+          "https://discord.gg/gigi",
+          "👧"
+        ],
+        [
+          "https://discord.gg/rosarians",
+          "💄"
+        ]
       ],
       [
         [
-          "https://discord.gg/wbMwpe39Fn",
-          "🗿"
+          "https://discord.gg/xZDnVtc4EP",
+          "💄"
+        ],
+        [
+          "https://discord.gg/chattino",
+          "🐱"
+        ],
+        [
+          "https://discord.gg/Njhgy3w8RV",
+          "🐱"
         ]
       ]
     ],
-    "avatar": "https://cdn.discordapp.com/attachments/1042098513082851331/1140779768481067101/advent.png",
-    "banner": "https://cdn.discordapp.com/attachments/1042098513082851331/1140205844080906300/wide_tako.png",
-    "name": "Hololive EN Advent"
+    "avatar": "https://cdn.discordapp.com/attachments/1255700316909998170/1265117995642912808/holojustice.png?ex=66a05872&is=669f06f2&hm=1ebd7228448cfd88a1be2928202379d3d09945b43c3c1c41dd8a0a4220985879&",
+    "banner": "holojustice.png",
+    "name": "Hololive EN Justice"
   },
   "niji": {
     "rows": [
@@ -401,10 +472,6 @@
           "🌤️"
         ],
         [
-          "https://discord.gg/finana",
-          "🐠"
-        ],
-        [
           "https://discord.gg/rosemi",
           "🌹"
         ],
@@ -414,14 +481,6 @@
         ]
       ],
       [
-        [
-          "https://discord.gg/myqa5s79cr",
-          "🎰"
-        ],
-        [
-          "https://discord.gg/WMc2MBbmfQ",
-          "🕵️🦊"
-        ],
         [
           "https://discord.gg/qRjpXd2UAC",
           "🦁💰"
@@ -452,10 +511,24 @@
           "https://discord.gg/millieparfait",
           "🪄"
         ]
+      ],
+      [
+        [
+          "https://discord.gg/wycRMJ7gtz",
+          "🤘"
+        ],
+        [
+          "https://discord.gg/3QQuMjkmkP",
+          "⭐"
+        ],
+        [
+          "https://discord.gg/ukicord",
+          "🔮"
+        ]
       ]
     ],
     "avatar": "https://cdn.discordapp.com/attachments/1042098513082851331/1140779768212623371/niji.png",
-    "banner": "https://cdn.discordapp.com/attachments/1042098513082851331/1140205844080906300/wide_tako.png",
+    "banner": "niji.png",
     "name": "Nijisanji EN"
   },
   "misc": {
@@ -504,10 +577,55 @@
           ""
         ]
       ],
-      null
+      [
+        [
+          "https://discord.gg/76MeBMUgNg",
+          "║"
+        ],
+        [
+          "https://discord.gg/SYAHUEj8UN",
+          "║"
+        ],
+        [
+          "https://discord.gg/CQCR2Q9get",
+          "║"
+        ],
+        [
+          "https://discord.gg/rbC2sM7HCx",
+          "║"
+        ],
+        [
+          "https://discord.gg/holopro",
+          "║"
+        ]
+      ],
+      [
+        [
+          "https://discord.gg/3bqnvCaRkw",
+          "║"
+        ],
+        [
+          "https://discord.gg/3X5Guh2trF",
+          "👑"
+        ],
+        [
+          "https://discord.com/invite/FhX3tAVrKs",
+          "🎲"
+        ]
+      ],
+      [
+        [
+          "https://discord.gg/qJ4gJpGDCN",
+          "🔷"
+        ],
+        [
+          "https://discord.gg/nmaqW86fU7",
+          "🇧🇷"
+        ]
+      ]
     ],
     "avatar": "https://cdn.discordapp.com/attachments/887967589031116820/979246559059382282/TakoRock.png",
-    "banner": "https://cdn.discordapp.com/attachments/1042098513082851331/1142142933475262534/langandmisc.png",
+    "banner": "misc.png",
     "name": "Other affiliated servers"
   }
 }

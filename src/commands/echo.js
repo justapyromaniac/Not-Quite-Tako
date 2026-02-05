@@ -1,11 +1,11 @@
-const {SlashCommandBuilder, PermissionFlagsBits, ChannelType, EmbedBuilder} = require("discord.js");
-
+const { SlashCommandBuilder, PermissionsBitField, ChannelType, EmbedBuilder } = require("discord.js");
 
 module.exports = {
+    type: "global",
     data: new SlashCommandBuilder()
         .setName('echo')
         .setDescription('Sends a message in the specified channel.')
-        .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
+        .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageMessages)
         .addStringOption(option =>
             option
                 .setName('message')
@@ -25,12 +25,22 @@ module.exports = {
                 .setDescription('If you intend to ping a role please specify it here, as it won\'t be pinged otherwise.')
         ),
     async execute(interaction) {
-        await interaction.deferReply({ephemeral: true});
+        await interaction.deferReply({ ephemeral: true });
 
         const messageContent = interaction.options.getString('message', true);
         const channel = interaction.options.getChannel('channel', true);
         const role = interaction.options.getRole('role');
 
+        if (!interaction.guild.members.me.permissionsIn(channel).has(PermissionsBitField.Flags.SendMessages) || !interaction.guild.members.me.permissionsIn(channel).has(PermissionsBitField.Flags.ViewChannel)) {
+            return interaction.editReply({
+                embeds: [
+                    new EmbedBuilder()
+                        .setColor('#D0312D')
+                        .setDescription('NQT does not have perms to send a message to that channel!')
+                ]
+            });
+        }
+        
         const message = await channel.send({
             content: messageContent,
             allowedMentions: { parse: ['users'], roles: role ? [role.id] : [] }
@@ -53,5 +63,6 @@ module.exports = {
                     .setDescription(`[Message has been sent.](${message.url})`)
             ]
         });
+
     }
 }

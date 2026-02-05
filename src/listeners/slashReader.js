@@ -9,6 +9,7 @@ exports.default = (client) => {
         if (!slash) return;
     
         try {
+            console.log(interaction.commandName);
             await slash.execute(interaction);
         } catch (error) {
             console.error(error);

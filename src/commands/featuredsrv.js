@@ -1,9 +1,12 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require(`discord.js`);
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require(`discord.js`);
-const serverbuttons = './serverbuttons.json';
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType, AttachmentBuilder } = require(`discord.js`);
+const path = require('path');
 const fs = require('fs');
 
+const serverbuttons = path.resolve(__dirname, '../serverbuttons.json');
+
 module.exports = {
+    type: "tako",
     data: new SlashCommandBuilder()
         .setName(`featuredsrv`)
         .setDescription(`For editing, creating and posting featured servers information and invites.`)
@@ -25,11 +28,15 @@ module.exports = {
                 .addNumberOption(option =>
                     option.setName(`row`)
                         .setDescription(`The row of the button, top to bottom. (Min: 1, Max: 5)`)
+                        .setMaxValue(5)
+                        .setMinValue(1)
                         .setRequired(true)
                 )
                 .addNumberOption(option =>
                     option.setName(`column`)
                         .setDescription(`The column of the button, left to right. (Min: 1, Max: 5)`)
+                        .setMaxValue(5)
+                        .setMinValue(1)
                         .setRequired(true)
                 )
                 .addStringOption(option =>
@@ -50,11 +57,12 @@ module.exports = {
                 )
         ),
     async execute(interaction) {
+
+        await interaction.deferReply({ ephemeral: true });
         const client = interaction.client;
 
         //POST ALL INVITES
         const postInvites = async (interaction, client) => {
-            console.log(`Post invites.`);
 
             const webhook = await fetchWebhook(interaction);
 
@@ -68,10 +76,11 @@ module.exports = {
                 let buttondata = JSON.parse(data);
 
                 //POSTS
+                
                 for (const post in buttondata) {
                     var rows = buttondata[post].rows;
                     var avatar = buttondata[post].avatar;
-                    var banner = buttondata[post].banner;
+                    var banner = `./resources/${buttondata[post].banner}`;
                     var name = buttondata[post].name;
                     //ACTION ROWS
                     var acomponents = [];
@@ -91,7 +100,7 @@ module.exports = {
                             } else {
                                 var tempbutton = new ButtonBuilder()
                                     .setLabel(`${abutton[1]}║⚠❗Server Invite Unavailable❗⚠║${abutton[1]}`)
-                                    .setURL(`https://cdn.discordapp.com/attachments/test1042098513082851331/1141956465540743218/c23f54aea2065f106e4dbb8218d0ce2d7853351c.png`)
+                                    .setURL(`https://cdn.discordapp.com/emojis/903698896268722186.webp?size=96&quality=lossless`)
                                     .setStyle(ButtonStyle.Link);
                             }
                             ARowB.addComponents(tempbutton);
@@ -99,14 +108,26 @@ module.exports = {
                         acomponents.push(ARowB);
                     }
 
-                    await webhook.send({
-                        files: [banner],
-                        username: name,
-                        avatarURL: avatar,
-                        components: acomponents
-                    }).catch(e => {
-                        console.error(`whoops: ${e}`);
-                    });
+                    const bannerPath = path.resolve(__dirname, `../resources/${buttondata[post].banner}`);
+                    if (fs.existsSync(bannerPath)) {
+                        await webhook.send({
+                            files: [bannerPath],
+                            username: name,
+                            avatarURL: avatar,
+                            components: acomponents
+                        }).catch(e => {
+                            console.error(`whoops: ${e}`);
+                        });
+                    } else {
+                        console.warn(`Banner file not found: ${bannerPath}`);
+                        await webhook.send({
+                            username: name,
+                            avatarURL: avatar,
+                            components: acomponents
+                        }).catch(e => {
+                            console.error(`whoops: ${e}`);
+                        });
+                    }
 
                 }
 
@@ -118,11 +139,11 @@ module.exports = {
                             .setStyle(ButtonStyle.Link),
                         new ButtonBuilder()
                             .setLabel(`🐙Emote Server!🐙`)
-                            .setURL(`https://discord.gg/tentacult1`)
+                            .setURL(`https://discord.gg/tentacultemote1`)
                             .setStyle(ButtonStyle.Link),
                         new ButtonBuilder()
                             .setLabel(`🐙🐙Even more emotes!🐙🐙`)
-                            .setURL(`https://discord.gg/tentacult2`)
+                            .setURL(`https://discord.gg/tentacultemote2`)
                             .setStyle(ButtonStyle.Link),
                         new ButtonBuilder()
                             .setLabel(`🐙🐙🐙MORE EMOTES!🐙🐙🐙`)
@@ -131,15 +152,23 @@ module.exports = {
                     );
 
                 await webhook.send({
-                    files: [`https://cdn.discordapp.com/attachments/1042098513082851331/1140205844080906300/wide_tako.png`],
                     username: "Permalinks to here",
-                    avatarURL: `https://cdn.discordapp.com/emojis/754420052865843260.gif?size=96&quality=lossless`,
+                    avatarURL: `https://cdn.discordapp.com/emojis/805277801531047946.webp?size=96&quality=lossless`,
                     components: [permalink]
                 }).catch(e => {
                     console.error(`whoops: ${e}`);
                 });
-            });
 
+                await webhook.send({
+                    content: `**If clicking a button gives you an "invite link is invalid or has expired" message be sure to refresh your discord. Ctrl + R should do the trick. <a:TakozillaPat:807766293347434547>\nIf for some reason that doesn't work. Please try copying the link from the button into your preferred browser <:InaHeart:767850477064290374>**`,
+                    username: "Note",
+                    avatarURL: `https://cdn.discordapp.com/emojis/959729902725255208.webp?size=96&quality=lossless`,
+                    components: []
+                }).catch(e => {
+                    console.error(`whoops: ${e}`);
+                });
+
+            });
         };
 
         const fetchWebhook = async (interaction) => {
@@ -149,6 +178,7 @@ module.exports = {
 
             if (notQuiteTako === undefined) {
                 notQuiteTako = await interaction.channel.createWebhook({ name: webhookName });
+                console.log(`New webhook created.`);
             }
 
             return await notQuiteTako.edit({ channel: interaction.channelId });
@@ -171,26 +201,20 @@ module.exports = {
         //MANAGE BUTTONS (EDIT,CREATE)
         if (interaction.options.getSubcommand() === `managebuttons`) {
 
-            await interaction.deferReply({ ephemeral: true });
-
             var mesid = interaction.options.getString(`messageid`);
             var row = interaction.options.getNumber(`row`) - 1;
             var column = interaction.options.getNumber(`column`) - 1;
-            if (row > 4 || column > 4 || row < 0 || column < 0) {
-                return interaction.editReply({ content: `Rows and columns start at 1 with a max of 5.`, ephemeral: true })
-            }
 
             var newname = interaction.options.getString(`newname`);
             var newlink = interaction.options.getString(`newlink`);
             var newmark = interaction.options.getString(`newmark`) ? interaction.options.getString(`newmark`) : "║";
             var checkdelete = interaction.options.getBoolean(`delete`);
-            var placeholderlink = "https://cdn.discordapp.com/attachments/1042098513082851331/1141956465540743218/c23f54aea2065f106e4dbb8218d0ce2d7853351c.png";
+            var placeholderlink = "https://cdn.discordapp.com/emojis/903698896268722186.webp?size=96&quality=lossless";
 
-            if (((newname == null) && newlink) || checkdelete) { } else { return interaction.editReply({ content: `If given a link, name is not needed.`, ephemeral: true }); }
-            if ((newname || newlink) || checkdelete) { } else { return interaction.editReply({ content: `No new link or name was given.`, ephemeral: true }); }
+            if (((newname == null) && newlink) || checkdelete) { } else { return interaction.editReply({ content: `If given a link, name is not needed.` }); }
+            if ((newname || newlink) || checkdelete) { } else { return interaction.editReply({ content: `No new link or name was given.` }); }
             const webhook = await fetchWebhook(interaction);
             var editedmessage = await webhook.fetchMessage(mesid);
-
             fs.readFile(serverbuttons, async (err, data) => {
                 if (err) throw err;
 
@@ -221,7 +245,7 @@ module.exports = {
 
                             WriteJSONFile(serverbuttons, buttondata);
 
-                            await interaction.editReply({ content: `The link row and/or button have been deleted.`, ephemeral: true });
+                            await interaction.editReply({ content: `The link row and/or button have been deleted.` });
                             break;
                         }
                     case (!editedmessage.components[row]): // If button row does not exist create a new one and add the new button.
@@ -252,7 +276,7 @@ module.exports = {
 
                             WriteJSONFile(serverbuttons, buttondata);
 
-                            await interaction.editReply({ content: `The link row and button have been created.`, ephemeral: true });
+                            await interaction.editReply({ content: `The link row and button have been created.` });
                             break;
                         }
                     case (editedmessage.components[row].components[column] == undefined): // If button does not exist creates the new button.
@@ -282,7 +306,7 @@ module.exports = {
 
                             WriteJSONFile(serverbuttons, buttondata);
 
-                            await interaction.editReply({ content: `The link button has been created.`, ephemeral: true });
+                            await interaction.editReply({ content: `The link button has been created.` });
                             break;
                         }
                     case (newlink): // If a new link is given for an existing button.
@@ -321,7 +345,7 @@ module.exports = {
 
                             webhook.editMessage(mesid, { components: editedmessage.components })
 
-                            await interaction.editReply({ content: msreply, ephemeral: true });
+                            await interaction.editReply({ content: msreply });
 
                             break;
                         }
@@ -338,7 +362,7 @@ module.exports = {
 
         if (interaction.options.getSubcommand() === `post`) {
             await postInvites(interaction, client);
-            return interaction.editReply({ content: `The featured servers have been posted.`, ephemeral: true })
+            return interaction.editReply({ content: `The featured servers have been posted.` })
         }
     },
 };
