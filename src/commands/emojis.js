@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('discord.js');
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
 module.exports = {
     type: "global",
@@ -79,9 +79,11 @@ module.exports = {
                 if (guild.id == interaction.guildId) { emojis = emojis.filter(em => em.animated == true); }
                 for (const emoji of emojis.values()) { output += `<${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}> \`\`:${emoji.name}:\`\`\n`; }
                 let PageList = [];
-                output = output.match(/[\s\S]{1,3072}(?=\n)/g);
-                for (let pages of output) {
-                    PageList.push(pages.match(/[\s\S]{1,1024}(?=\n)/g));
+                let matches = output.match(/[\s\S]{1,3070}\n/g);
+                if (matches) {
+                    for (let pages of matches) {
+                        PageList.push(pages.match(/[\s\S]{1,1022}\n/g));
+                    }
                 }
                 GuildList = { server: guild.name, pages: PageList };
 
