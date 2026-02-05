@@ -1,4 +1,6 @@
 .env
 node_modules
 *.ts
+*.db
 tsconfig.json
+pm2.config.js

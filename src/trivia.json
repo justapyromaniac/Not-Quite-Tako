@@ -1,0 +1,276 @@
+[
+    {
+        "question": "What does the first WAH stand for?",
+        "answer": "We Are Happy",
+        "options": ["We Are Happy","We Adore Her","We Are Hype","We Are Here"]
+    },
+    {
+        "question": "What does the second WAH stand for?",
+        "answer": "We Are Hype",
+        "options": ["We Are Happy","We Adore Her","We Are Hype","We Are Here"]
+    },
+    {
+        "question": "How many braincells does a Tako have?",
+        "answer": "One",
+        "options": ["The same as Ina","Two","Half One","One"]
+    },
+    {
+        "question": "What kind of animal is Rupert?",
+        "answer": "Alligator",
+        "options": ["Alligator","Crocodile","Gecko","Turtle"]
+    },
+    {
+        "question": "When the famous Ina's \"TOMORROW\" occurred what outfit was Ina wearing?",
+        "answer": "Kimono",
+        "options": ["Kimono","Artist","Gamer","Default"]
+    },
+    {
+        "question": "Merry Christmas!",
+        "answer": "Merry Christmas!",
+        "options": ["Merry Christmas!","Is not Christmas","Huh?","Happy Halloween!"]
+    },
+    {
+        "question": "The time between streams #2 and #3 of Ina's Zelda BotW series is of...",
+        "answer": "444 days",
+        "options": ["444 days","310 days","210 days","555 days"]
+    },
+    {
+        "question": "What's the name of Ina's KDTD Plushie?",
+        "answer": "Yuyu",
+        "options": ["Daiyu","Yayu","Burrito","Yuyu"]
+    },
+    {
+        "question": "What's Ina's favorite snack to nibble? ",
+        "answer": "Ministop Niboshi",
+        "options": ["Ministop Niboshi","Mentaiko Onigiri","Potato Chips","Fruit"]
+    },
+    {
+        "question": "Ina does not like...",
+        "answer": "Cucumbers",
+        "options": ["Capybaras","Cucumbers","Apples","Cows"]
+    },
+    {
+        "question": "Takodachis... ",
+        "answer": "Love Ina",
+        "options": ["Love Ina","Hate water","Are squids","Are not cute"]
+    },
+    {
+        "question": "Which song did Ina sent in her audition?",
+        "answer": "Yonjuunana",
+        "options": ["Unravel","Lagtrain","Yonjuunana","Violet"]
+    },
+    {
+        "question": "What are Takos made out of?",
+        "answer": "Void",
+        "options": ["Plums","Grape Juice","Octopus","Void"]
+    },
+    {
+        "question": "Takodachis taste like...",
+        "answer": "Switch Cartridges",
+        "options": ["Switch Cartridges","What?","Fish","Fruit"]
+    },
+    {
+        "question": "Ina's favorite fruit is...",
+        "answer": "Pineapple",
+        "options": ["Apple","Pineapple","Banana","Watermelon"]
+    },
+    {
+        "question": "What is the name of Ina's first original song?",
+        "answer": "Violet",
+        "options": ["Purple","Ancient One","ないない","Violet"]
+    },
+    {
+        "question": "Ina sang this on her 3D showcase...",
+        "answer": "If-hitori omou",
+        "options": ["If-hitori omou","Violet","Utayo","Yoru ni Kakeru"]
+    },
+    {
+        "question": "Ina first streamed game was...",
+        "answer": "Call of Cthulu",
+        "options": ["Minecraft","Call of Cthulu","Surgeon Simulator 2","Passpartout"]
+    },
+    {
+        "question": "Ina first multi collab on her channel was with...",
+        "answer": "Ame and Gura",
+        "options": ["Ame and Gura","Calli and Gura","Kiara and Ame","Ame and Calli"]
+    },
+    {
+        "question": "Who was the first one to use the word ''brong''",
+        "answer": "Lyud",
+        "options": ["Ryusei","Lyud","Swoog","Srazz"]
+    },
+    {
+        "question": "We had many events in Inacord which one of these is NOT one of them",
+        "answer": "AO-Chan's hide and seek",
+        "options": ["Candy Search","Burrito button","Snowball fight","AO-Chan's hide and seek"]
+    },
+    {
+        "question": "How did Swoog earn his mod status?",
+        "answer": "He counted to 100 in jail",
+        "options": ["He counted to 100 in jail","He wrote a essay about Ina","Won a Ina-Quiz","Won rock paper scissors againts an admin"]
+    },
+    {
+        "question": "Who was the first person to ban Ryusei?",
+        "answer": "Swoog",
+        "options": ["Srazz","Fray","Miu","Swoog"]
+    },
+    {
+        "question": "What animal is the allmight Carl?",
+        "answer": "Turtle",
+        "options": ["Cat","Turtle","Dog","Fox"]
+    },
+    {
+        "question": "We have many bots to help us amids them is KoroTagger, What does KoroTagger post before every stream?",
+        "answer": "_",
+        "options": ["_","+","-","."]
+    },
+    {
+        "question": "We have many channels but which one has the most messages on average?",
+        "answer": "General",
+        "options": ["Basement","General","Gacha","Stream-chat"]
+    },
+    {
+        "question": "Before ?woomy what was the required code to enter the tentacult?",
+        "answer": "?nocucumber",
+        "options": ["?wah","?Ina","?nocucumber","?Bonk"]
+    },
+    {
+        "question": "What song is the ongoing meme that Ina will surely one day sing (she wont)",
+        "answer": "Lagtrain",
+        "options": ["Hey soul sister","Lagtrain","Mogu Mogu","Violet"]
+    },
+    {
+        "question": "Who is the one and only gamer in inacord?",
+        "answer": "kat",
+        "options": ["rift","Op","Lyn","kat"]
+    },
+    {
+        "question": "What size canvas does Ina use for her gesture drawings during Inacademy?",
+        "answer": "6000x6000",
+        "options": ["6000x6000","4000x6000","2048x2048","4000x3000"]
+    },
+    {
+        "question": "What are the names of Ina's clarinet and (former) bassoon?",
+        "answer": "Claire and Bernard",
+        "options": ["Clara and Benjamin","Charlotte and Barrett","Claire and Bernard","Caitlin and Brendan"]
+    },
+    {
+        "question": "Which song was hard for Ina to sing for a while due to the amount of ceiling leakage it caused?",
+        "answer": "\"Gunjou\" - YOASOBI",
+        "options": ["\"Rokutousei no Yoru\" - Aimer","\"EVERBLUE\" - Omoinotake","\"TOKYO\" - YUI","\"Gunjou\" - YOASOBI"]
+    },
+    {
+        "question": "What was the name Ina gave to the rubber chicken she bought on April Fools'?",
+        "answer": "Boc",
+        "options": ["Clucky","The WAHtcher","Boc","Chicken"]
+    },
+    {
+        "question": "Which movie did Ina NOT cry at the end of?",
+        "answer": "JJK 0",
+        "options": ["E.T.","Harry Potter and the Deathly Hallows Part 2","JJK 0","Marley & Me"]
+    },
+    {
+        "question": "Who is Ina's favorite NPC from Hollow Knight?",
+        "answer": "Quirrel",
+        "options": ["Quirrel","Hornet","Cornifer","The Last Stag"]
+    },
+    {
+        "question": "Which play made Ina cry during English class?",
+        "answer": "Cyrano de Bergerac",
+        "options": ["Hamlet","King Lear","Cyrano de Bergerac","Arden of Faversham"]
+    },
+    {
+        "question": "Which piece of music did Ina select to learn on the piano for her senior music analysis project?",
+        "answer": "\"To Zanarkand\" - FFX",
+        "options": ["\"The Name of Life\"- Spirited Away","\"To Zanarkand\" - FFX","\"Lilium\" - Elfen Lied","\"Eyes On Me\" - FFVIII"]
+    },
+    {
+        "question": "What was the first game Ina ever saw her cousins playing on their consoles?",
+        "answer": "Kingdom Hearts",
+        "options": ["Hamtaro Ham-Ham Heartbreak","Mario Kart Super Circuit","Pokemon Sapphire","Kingdom Hearts"]
+    },
+    {
+        "question": "What is the second form of Tako no Kokyuu?",
+        "answer": "Drinking coffee",
+        "options": ["Sleep","Eating the Biscuit","Drinking coffee","Lying on floor"]
+    }, {
+        "question": "Which arcade cabinet game did Papa'nis get a high score on while vacationing on a cruise ship?",
+        "answer": "Galaga",
+        "options": ["Galaga","Space Invaders","Missile Command","Pac-Man"]
+    },
+    {
+        "question": "Where did Ina experience her first earthquake?",
+        "answer": "LA",
+        "options": ["LA","Tokyo","Vancouver","Saitama"]
+    },
+    {
+        "question": "What was the first errand that Mama'nis had Ina complete when she was little?",
+        "answer": "Buying some tofu",
+        "options": ["Visiting a bakery for cookies","Buying some tofu","Watering the garden","Getting ice-cream for Ane'nis and Nana'nis"]
+    },
+    {
+        "question": "What ingredients did Mama'nis once use in a sandwich for Ina's school lunches?",
+        "answer": "Ham, lettuce, tomato, egg, and strawberry jam",
+        "options": ["Ham, lettuce, tomato, egg, and strawberry jam","Peanut butter, lettuce, cheese, and olives","Ham, cheese, cookie butter, tomato, and cucumbers","Peanut butter, strawberry jam, egg, and lettuce"]
+    },
+    {
+        "question": "Which of the following did Ina NOT want to be when she grew up?",
+        "answer": "Pokemon trainer",
+        "options": ["Gundam pilot","Jedi","Scientist","Pokemon trainer"]
+    },
+    {
+        "question": "What is Ina's favorite type of cookie from Subway?",
+        "answer": "White chocolate cranberry",
+        "options": ["White chip macademia","Chocolate chip","White chocolate cranberry","Raspberry cheesecake"]
+    },
+    {
+        "question": "What brand of drinks has sponsored Ina at least two times?",
+        "answer": "Choya",
+        "options": ["Dr. Oopsie","Choya","Red bull","Coca-Cola"]
+    },
+    {
+        "question": "Ina has a shirt with a root vegetables on it, which one is it?",
+        "answer": "Sweet Potato",
+        "options": ["Potato","Carrot","Sweet Potato","Radish"]
+    },
+    {
+        "question": "Ina has not yet played one of these games on stream...",
+        "answer": "Outer Wilds",
+        "options": ["Sakuna of rice and ruin","S. Mario Maker 2","Elden Ring","Outer Wilds"]
+    },
+    {
+        "question": "This is a song Ina really really likes.",
+        "answer": "KICK BACK",
+        "options": ["KICK BACK","Lagtrain","KING","Phony"]
+    },
+    {
+        "question": "Surely, the best food ever, approved by general.",
+        "answer": "Sand",
+        "options": ["Cookies","Sand","Pasta","Snow"]
+    },
+    {
+        "question": "Which Pokémon was Ina's ace during her playthrough of Pokémon Violet",
+        "answer": "Chocobi",
+        "options": ["Kusa","Chocobi","Bagel","Otoro"]
+    },
+    {
+        "question": "This channel does not exist on this server...",
+        "answer": "#bot-commands",
+        "options": ["#bot-commands","#ina-chat","#inarchive","#🟥🟥🟥🟥🟥🟥"]
+    },
+    {
+        "question": "Ina drew this videogame character officially!",
+        "answer": "Sonic",
+        "options": ["Pikachu","Sonic","The Tarnished","Clive Rosfield"]
+    },
+    {
+        "question": "Ina has played one of these games on stream...",
+        "answer": "Potion Craft",
+        "options": ["Bayonetta 2","NieR Replicant","Outer Wilds","Potion Craft"]
+    },
+    {
+        "question": "The sussiest of them all",
+        "answer": "Ryu",
+        "options": ["Ryu","Red","Blue","The actual impostor"]
+    }
+]
