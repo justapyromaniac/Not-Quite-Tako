@@ -1,3 +1,5 @@
+const { configdb } = require('../models/config');
+
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = (client) => {
@@ -5,6 +7,9 @@ exports.default = (client) => {
         if (!client.user || !client.application) {
             return;
         }
+
+        configdb.sync()
+
         console.log("WAH! (We Are Here!)\n(a bot made by just_a_pyro and NxKarim)");
     });
 };

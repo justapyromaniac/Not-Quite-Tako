@@ -35,7 +35,7 @@ module.exports = {
             const globalsh = [];
             const takosh = [];
             const devsh = [];
-            const slashfiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+            const slashfiles = fs.readdirSync('./src/commands').filter(file => file.endsWith('.js'));
 
             for (const file of slashfiles) {
                 const command = require(`../commands/${file}`);

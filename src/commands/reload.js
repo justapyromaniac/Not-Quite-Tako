@@ -1,8 +1,8 @@
 var fs = require('fs');
 const { SlashCommandBuilder, PermissionFlagsBits } = require(`discord.js`);
-var cfiles = fs.readdirSync('./commands');
-var pfiles = fs.readdirSync('./passives');
-var ffiles = fs.readdirSync('./functions');
+var cfiles = fs.readdirSync('./src/commands');
+var pfiles = fs.readdirSync('./src/passives');
+var lfiles = fs.readdirSync('./src/listeners');
 
 const coption = [];
 
@@ -16,7 +16,7 @@ for (const file of pfiles) {
     coption.push({ name: `${cname}`, value: `${cname}` })
 }
 
-for (const file of ffiles) {
+for (const file of lfiles) {
     let cname = file.replace(".js", "")
     coption.push({ name: `${cname}`, value: `${cname}` })
 }
@@ -72,18 +72,18 @@ module.exports = {
                 }
             } else {
 
-                var cfiles = fs.readdirSync('./commands');
-                var pfiles = fs.readdirSync('./passives');
-                var ffiles = fs.readdirSync('./functions');
+                var cfiles = fs.readdirSync('./src/commands');
+                var pfiles = fs.readdirSync('./src/passives');
+                var lfiles = fs.readdirSync('./src/listeners');
 
                 var pathfind = cfiles.find(f => wordInString(`${f}`, `${cName}`)) ? `../commands/` + `${cName}.js` :
                     pfiles.find(f => wordInString(`${f}`, `${cName}`)) ? `../passives/` + `${cName}.js` :
-                        ffiles.find(f => wordInString(`${f}`, `${cName}`)) ? `../functions/` + `${cName}.js` :
+                        lfiles.find(f => wordInString(`${f}`, `${cName}`)) ? `../functions/` + `${cName}.js` :
                             undefined;
 
                 var typepath = cfiles.find(f => wordInString(`${f}`, `${cName}`)) ? `commands` :
                     pfiles.find(f => wordInString(`${f}`, `${cName}`)) ? `passives` :
-                        ffiles.find(f => wordInString(`${f}`, `${cName}`)) ? `functions` :
+                        lfiles.find(f => wordInString(`${f}`, `${cName}`)) ? `functions` :
                             undefined;
 
                 if (pathfind != undefined) {

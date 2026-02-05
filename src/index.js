@@ -7,6 +7,7 @@ const discord_js_1 = require("discord.js");
 const {Collection} = require('discord.js');
 const path = require('path');
 const fs = require('fs');
+const { setupDatabases } = require("./databases");
 const dotenv_1 = __importDefault(require("dotenv"));
 const messageReader_1 = __importDefault(require("./listeners/messageReader"));
 const slashReader_1 = __importDefault(require("./listeners/slashReader"));
@@ -22,6 +23,8 @@ const client = new discord_js_1.Client({
         discord_js_1.GatewayIntentBits.GuildEmojisAndStickers,
     ]
 });
+
+setupDatabases()
 
 client.commands = new Collection();
 client.passives = new Collection();
