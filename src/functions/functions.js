@@ -29,6 +29,7 @@ function ordinal_suffix_of(i) {
 
 async function getMessages(channel, limite) {
     var ma = [];
+    if (!channel) return ma;
     let lid;
     while (true) {
         const options = { limit: 100 };

@@ -57,11 +57,15 @@ module.exports = {
         var eInk = `💧`, eCookie = `🍪`
         let ChannelArray = [`1147028821829222470`, `1147794063257513984`, `1147794102801408021`, `1152072578458996757`];
 
-        var AOemote = await client.emojis.cache.get(`760961387530158121`);
-        var Goldemote = await client.emojis.cache.get(`760954225311875112`);
-        var Silveremote = await client.emojis.cache.get(`760961384657322028`);
-        var Takoemote = await client.emojis.cache.get(`760961385277554698`);
+        var AOemote = await client.emojis.cache.get(`760961387530158121`) || "";
+        var Goldemote = await client.emojis.cache.get(`760954225311875112`) || "";
+        var Silveremote = await client.emojis.cache.get(`760961384657322028`) || "";
+        var Takoemote = await client.emojis.cache.get(`760961385277554698`) || "";
         let EmojiArray = await [Takoemote, Silveremote, Goldemote, AOemote];
+
+        if (!AOemote || !Goldemote || !Silveremote || !Takoemote) {
+            console.warn("Warning: One or more TakoGacha emojis were not found.");
+        }
 
         let fowa = new ButtonBuilder()
             .setEmoji('⬅️')
@@ -138,25 +142,30 @@ module.exports = {
 
             var mens = await interaction.editReply({ embeds: [takoEmbed], components: [buttonRowTako] });
             const filter = (i) => i.user.id === interaction.user.id;
-            var collectedButtons = await mens.awaitMessageComponent({ filter, time: 60000 })
+            try {
+                var collectedButtons = await mens.awaitMessageComponent({ filter, time: 60000 });
 
-            if (collectedButtons.customId == "tako") {
-                await sleep(1000);
+                if (collectedButtons.customId == "tako") {
+                    await sleep(1000);
 
-                takodb.run(NewUser, [interaction.user.id, interaction.user.id], (err) => {
-                    if (err) {
-                        return console.log(err, `Registration Error.`);
-                    } else {
-                        takoEmbed.fields[0].name = `**Registration complete!**`;
-                        takoEmbed.fields[0].value = `_You can now use all takogacha commands. Have fun!._\n**How to Play**\n**Try first to summon Takodachis!**\n**You need a Tako to play so, choose your Tako Friend!**\n**And at last play to get more ink to summon!**`;
-                        let Cant = 800;
-                        InkFunction(Cant, interaction.user.id, takodb);
-                        closeDb(takodb);
-                        return interaction.editReply({ embeds: [takoEmbed], components: [] });
-                    }
-                });
+                    takodb.run(NewUser, [interaction.user.id, interaction.user.id], (err) => {
+                        if (err) {
+                            return console.log(err, `Registration Error.`);
+                        } else {
+                            takoEmbed.fields[0].name = `**Registration complete!**`;
+                            takoEmbed.fields[0].value = `_You can now use all takogacha commands. Have fun!._\n**How to Play**\n**Try first to summon Takodachis!**\n**You need a Tako to play so, choose your Tako Friend!**\n**And at last play to get more ink to summon!**`;
+                            let Cant = 800;
+                            InkFunction(Cant, interaction.user.id, takodb);
+                            closeDb(takodb);
+                            return interaction.editReply({ embeds: [takoEmbed], components: [] });
+                        }
+                    });
 
-            }
+                }
+
+            } catch (e) {
+                await interaction.editReply({ content: 'Registration timed out.', components: [] });
+        }
 
         } else {
 
@@ -342,7 +351,9 @@ module.exports = {
                     let ArrayOfTakos = [], MessageArray = [], Ncookies = 0;
 
                     for (var i = 0; i < ChannelArray.length; i++) {
-                        MessageArray[i] = await getMessages(client.channels.cache.find(ch => ch.id == `${ChannelArray[i]}`), 150);
+                        const channel = client.channels.cache.find(ch => ch.id == `${ChannelArray[i]}`);
+                        if (!channel) console.warn(`Warning: TakoGacha channel ${ChannelArray[i]} not found.`);
+                        MessageArray[i] = await getMessages(channel, 150);
                     }
 
                     let AllTakoRow = await GetAllUserTakos();
