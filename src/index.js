@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const dotenv = require('dotenv');
 
+const messageUpdateReader = require('./listeners/messageUpdateReader').default;
 const messageReader = require("./listeners/messageReader").default;
 const slashReader = require("./listeners/slashReader").default;
 const ready = require("./listeners/ready").default;
@@ -46,9 +47,17 @@ for (const ffile of functionFiles) {
     client.functions.set(ffile.replace(`.js`,``),funct);
 }
 
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, '..', '.env') });
+
+const { setupDatabases } = require('./databases');
+const { Config, Feature_Channels } = require('./models/config');
+
+setupDatabases();
+client.db = { Config, Feature_Channels };
+
 ready(client);
 messageReader(client);
+messageUpdateReader(client);
 slashReader(client);
 cron(client);
 client.login(process.env.TOKEN);
