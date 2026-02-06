@@ -11,12 +11,14 @@ module.exports = {
             return;
         }
 
+        let config;
+
         // --- TOGGLE ---
         try {
             const { Config, Feature_Channels } = client.db;
             const guildId = message.guild.id;
 
-            const config = await Config.findByPk(guildId);
+            config = await Config.findByPk(guildId);
             if (config && config.features && config.features.nottako === false) {
                 return;
             }
@@ -42,8 +44,13 @@ module.exports = {
 
         const NQT = async (message, client) => {
 
-            const fixedMessage = await fixPoorMessage(message, client);
+            let fixedMessage = await fixPoorMessage(message, client);
             if (fixedMessage === undefined) { return; }
+
+            if (config?.features?.nottako_replies !== false) {
+                 const replyHeader = await getReplyHeader(message);
+                 fixedMessage = replyHeader + fixedMessage;
+            }
 
             const webhook = await fetchWebhook(message);
 
@@ -87,6 +94,59 @@ module.exports = {
             const editOptions = { channel: message.channel.isThread() ? message.channel.parentId : message.channelId };
             await notQuiteTako.edit(editOptions);
             return notQuiteTako;
+        };
+
+        const getReplyHeader = async (message) => {
+            if (!message.reference || !message.reference.messageId) return '';
+
+            try {
+                const repliedMessage = await message.channel.messages.fetch(message.reference.messageId);
+                const rawLink = `https://discord.com/channels/${message.guildId}/${message.channelId}/${message.reference.messageId}`;
+                
+                let excerpt = "";
+                const content = repliedMessage.content;
+                const limit = config?.reply_length || 20;
+
+                if (content) {
+                    if (content.includes('||')) {
+                         excerpt = " [spoiler]";
+                    } else {
+                        const parts = content.split(/(<a?:.+?:\d+>)/g);
+                        let count = 0;
+                        let excerptPart = "";
+                        
+                        for (const part of parts) {
+                            if (part.match(/<a?:.+?:\d+>/)) {
+                                if (count < limit) {
+                                    excerptPart += part;
+                                    count++;
+                                }
+                            } else {
+                                for (const char of Array.from(part)) {
+                                    if (count < limit) {
+                                        excerptPart += char;
+                                        count++;
+                                    } else {
+                                        break;
+                                    }
+                                }
+                            }
+                            if (count >= limit) break;
+                        }
+
+                        const totalLength = Array.from(content.replace(/<a?:.+?:\d+>/g, 'E')).length;
+                        if (totalLength > limit) excerptPart += "...";
+                        
+                        excerpt = ` (${excerptPart})`;
+                    }
+                }
+
+                return `${rawLink}${excerpt}\n`;
+            } catch (e) {
+                // Fallback for when message cannot be fetched (e.g. deleted or no access)
+                const rawLink = `https://discord.com/channels/${message.guildId}/${message.channelId}/${message.reference.messageId}`;
+                return `${rawLink}\n`;
+            }
         };
 
         const fixPoorMessage = async (message, client) => {

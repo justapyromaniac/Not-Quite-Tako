@@ -18,7 +18,7 @@ const connect = async (db) => {
 		}
 
 		await db.authenticate();
-        await db.sync(); 
+        await db.sync({ alter: true }); 
         console.log("Successfully connected to configuration database!");
 	} catch (error) {
 		console.error('Database connection failed:', error);

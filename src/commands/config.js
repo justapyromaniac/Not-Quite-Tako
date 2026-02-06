@@ -34,6 +34,24 @@ module.exports = {
                         )
                 )
                 .addSubcommand(sub =>
+                    sub.setName('replies')
+                        .setDescription('Enable or disable replies in bot posts')
+                        .addBooleanOption(option =>
+                            option.setName('enabled')
+                                .setDescription('Should this be enabled? true/false')
+                                .setRequired(true)
+                        )
+                )
+                .addSubcommand(sub =>
+                    sub.setName('replylength')
+                        .setDescription('Set the max length of the reply preview')
+                        .addIntegerOption(option =>
+                            option.setName('length')
+                                .setDescription('Number of characters/emojis (default 20)')
+                                .setRequired(true)
+                        )
+                )
+                .addSubcommand(sub =>
                     sub.setName('editlimit')
                         .setDescription('Set the time limit for processing edited messages')
                         .addNumberOption(option =>
@@ -229,6 +247,12 @@ module.exports = {
             if (group === 'nottako') {
                 if (subcommand === 'toggle') return toggleFeature('nottako', interaction.options.getBoolean('enabled'));
                 if (subcommand === 'edits') return toggleFeature('nottako_edits', interaction.options.getBoolean('enabled'));
+                if (subcommand === 'replies') return toggleFeature('nottako_replies', interaction.options.getBoolean('enabled'));
+                if (subcommand === 'replylength') {
+                    const length = interaction.options.getInteger('length');
+                    await config.update({ reply_length: length });
+                    return interaction.editReply(`Reply Preview Length set to **${length}**.`);
+                }
                 if (subcommand === 'editlimit') {
                     const limit = interaction.options.getNumber('seconds');
                     await config.update({ edit_timeout: limit });

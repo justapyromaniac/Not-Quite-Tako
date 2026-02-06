@@ -16,6 +16,8 @@ Discord uses this role for webhook perms, so it needs to be on for the webhook t
 *   `/config nottako toggle <enabled>`: Enable/Disable the Not Quite Tako emoji replacement.
 *   `/config nottako edits <enabled>`: Enable/Disable looking for emojis in edited messages.
 *   `/config nottako editlimit <seconds>`: Set the time limit for processing edited messages.
+*   `/config nottako replies <enabled>`: Enable/Disable replies in bot responses.
+*   `/config nottako replylength <length>`: Set the character limit for the reply preview.
 *   `/config nottako channels <action> <channel> <type>`: Configure allowed channels for Not Quite Tako emoji replacement.
 *   `/config takogacha toggle <enabled>`: Enable/Disable TakoGacha.
 *   `/config takogacha channels <action> <channel> <type>`: Configure allowed channels for TakoGacha commands.
