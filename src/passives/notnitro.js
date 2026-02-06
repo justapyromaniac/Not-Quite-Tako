@@ -1,7 +1,7 @@
 let AllWebhooks = new Map();
 module.exports = {
     data: {
-        name: 'notnitro',
+        name: 'nottako',
         description: 'Makes NQT replace text for real emotes that has available.'
     },
     async execute(message) {
@@ -9,6 +9,34 @@ module.exports = {
 
         if (message.content.match(/(?!<a?|`.*):[^<:>\s]+?:(?!\d+>|.*`)/g) === null) {
             return;
+        }
+
+        // --- TOGGLE ---
+        try {
+            const { Config, Feature_Channels } = client.db;
+            const guildId = message.guild.id;
+
+            const config = await Config.findByPk(guildId);
+            if (config && config.features && config.features.nottako === false) {
+                return;
+            }
+
+            const reactChannels = await Feature_Channels.findOne({ 
+                where: { ConfigServer: guildId, feature: 'nottako' } 
+            });
+            if (reactChannels) {
+                const list = reactChannels.channels || [];
+                const isAllowList = reactChannels.allow; 
+
+                if (isAllowList) {
+                    if (!list.includes(message.channel.id)) return;
+                } else {
+                    if (list.includes(message.channel.id)) return;
+                }
+            }
+        } catch (err) {
+            console.error("Config check failed:", err);
+            // not nitro is kindof the point of the bot, continue anyway
         }
 
 
