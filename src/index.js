@@ -48,6 +48,13 @@ for (const ffile of functionFiles) {
 }
 
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
+
+const { setupDatabases } = require('./databases');
+const { Config, Feature_Channels } = require('./models/config');
+
+setupDatabases();
+client.db = { Config, Feature_Channels };
+
 ready(client);
 messageReader(client);
 messageUpdateReader(client);
