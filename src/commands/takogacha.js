@@ -54,14 +54,52 @@ module.exports = {
         let takodb = await OpenTakoDB();
 
         const client = interaction.client;
-        var eInk = `💧`, eCookie = `🍪`
-        let ChannelArray = [`1147028821829222470`, `1147794063257513984`, `1147794102801408021`, `1152072578458996757`];
+        const { Config, Feature_Channels } = client.db;
+        const guildId = interaction.guildId;
 
-        var AOemote = await client.emojis.cache.get(`760961387530158121`) || "";
-        var Goldemote = await client.emojis.cache.get(`760954225311875112`) || "";
-        var Silveremote = await client.emojis.cache.get(`760961384657322028`) || "";
-        var Takoemote = await client.emojis.cache.get(`760961385277554698`) || "";
-        let EmojiArray = await [Takoemote, Silveremote, Goldemote, AOemote];
+        // --- TOGGLE ---
+        const config = await Config.findByPk(guildId);
+        if (config && config.features && config.features.takogacha === false) {
+           await closeDb(takodb);
+           return interaction.reply({ content: 'TakoGacha is disabled on this server.', ephemeral: true });
+        }
+
+        // --- CHANNEL PERMS ---
+        const permRC = await Feature_Channels.findOne({ where: { ConfigServer: guildId, feature: 'takogacha' } });
+        if (permRC) {
+            const list = permRC.channels || [];
+            if (permRC.allow) {
+                if (!list.includes(interaction.channelId)) {
+                    await closeDb(takodb);
+                    return interaction.reply({ content: 'TakoGacha commands are not allowed in this channel.', ephemeral: true });
+                }
+            } else {
+                if (list.includes(interaction.channelId)) {
+                    await closeDb(takodb);
+                    return interaction.reply({ content: 'TakoGacha commands are disabled in this channel.', ephemeral: true });
+                }
+            }
+        }
+
+        // --- SOURCE CHANNELS ---
+        let ChannelArray = []; 
+        const rc = await Feature_Channels.findOne({ where: { ConfigServer: guildId, feature: 'takogacha_sources' } });
+        
+        if (rc && rc.channels && rc.channels.length > 0) {
+            ChannelArray = rc.channels;
+        } else {
+            ChannelArray = [`1147028821829222470`, `1147794063257513984`, `1147794102801408021`, `1152072578458996757`]; 
+        }
+
+        var eInk = `💧`, eCookie = `🍪`
+
+        const getEmojiId = (key, defaultId) => (config && config.emojis && config.emojis[key]) ? config.emojis[key] : defaultId;
+
+        var AOemote = await client.emojis.cache.get(getEmojiId('ao', `760961387530158121`)) || "";
+        var Goldemote = await client.emojis.cache.get(getEmojiId('gold', `760954225311875112`)) || "";
+        var Silveremote = await client.emojis.cache.get(getEmojiId('silver', `760961384657322028`)) || "";
+        var Takoemote = await client.emojis.cache.get(getEmojiId('tako', `760961385277554698`)) || "";
+        let EmojiArray = [Takoemote, Silveremote, Goldemote, AOemote];
 
         if (!AOemote || !Goldemote || !Silveremote || !Takoemote) {
             console.warn("Warning: One or more TakoGacha emojis were not found.");
@@ -352,8 +390,12 @@ module.exports = {
 
                     for (var i = 0; i < ChannelArray.length; i++) {
                         const channel = client.channels.cache.find(ch => ch.id == `${ChannelArray[i]}`);
-                        if (!channel) console.warn(`Warning: TakoGacha channel ${ChannelArray[i]} not found.`);
-                        MessageArray[i] = await getMessages(channel, 150);
+                        if (!channel) {
+                             console.warn(`Warning: TakoGacha summon cannot access channel ${ChannelArray[i]}.`);
+                             continue; 
+                        }
+                        const msgs = await getMessages(channel, 150);
+                        if (msgs) MessageArray[i] = msgs; 
                     }
 
                     let AllTakoRow = await GetAllUserTakos();
@@ -364,11 +406,20 @@ module.exports = {
                         let TakoAmount = AllTakoRow.length;
                         let Check100 = await AllTakoRow.some(r => r.takoid == `S-0001`);
                         if (TakoAmount < 100) {
-                            MessageArray[3].pop();
+                            if (MessageArray[3] && MessageArray[3].length > 0) MessageArray[3].pop();
                         } else if (!Check100) {
-                            MessageArray[3] = [MessageArray[3].pop()];
-                            Free100 = true;
+                            if (MessageArray[3] && MessageArray[3].length > 0) {
+                                MessageArray[3] = [MessageArray[3].pop()];
+                                Free100 = true;
+                            }
                         }
+                    }
+
+                    const hasMessages = MessageArray.some(arr => arr && arr.length > 0);
+                    if (!hasMessages) {
+                        await closeDb(takodb);
+                        console.warn(`[TakoGacha] Warning: No Takos found to summon!`);
+                        return interaction.editReply({ content: 'No summonable Takos!? WAHere\'d they all go?', ephemeral: true });
                     }
 
                     for (var x = 0; x < rolls; x++) {
@@ -381,6 +432,13 @@ module.exports = {
 
                         var gacharesult = weightedRandom(Chance);
                         var takomes = MessageArray[gacharesult];
+
+                        if (!takomes || takomes.length === 0) {
+                             console.warn(`[TakoGacha] Warning: Channel for ${gacharesult} is empty. Cannot summon.`);
+                             takoEmbed.description = (takoEmbed.description || "") + "\n\n **Got nothing... someone forgot to fill the gacha machine!**";
+                             break; 
+                        }
+
                         var randomindex = randomnum(0, takomes.length);
                         var takose = takomes[randomindex];
                         var url = takose.attachments.first().url;
@@ -419,9 +477,12 @@ module.exports = {
                         })
                     }
 
-                    takoEmbed.description = `I say WAH you say WAH ${ArrayOfTakos.length} times!.`
+                    takoEmbed.description = `I say WAH you say WAH ${ArrayOfTakos.length} times!.` + (takoEmbed.description || "");
+                    
+                    // errors are free
+                    const actualRolls = ArrayOfTakos.length;
                     CookieFunction(Ncookies, interaction.user.id, takodb);
-                    InkFunction(-80 * rolls, interaction.user.id, takodb);
+                    if (actualRolls > 0) InkFunction(-80 * actualRolls, interaction.user.id, takodb);
 
                     var RowButtons = new ActionRowBuilder()
 
