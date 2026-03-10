@@ -10,7 +10,12 @@ const config = configdb.define(
         },
         features: {
             type: DataTypes.JSON,
-            defaultValue: {}
+            defaultValue: {
+                nottako: true,
+                nottako_edits: true,
+                nottako_replies: false,
+                takogacha: false
+            }
         },
         emojis: {
             type: DataTypes.JSON,
@@ -19,6 +24,10 @@ const config = configdb.define(
         edit_timeout: {
             type: DataTypes.FLOAT,
             defaultValue: 10.0
+        },
+        reply_length: {
+            type: DataTypes.INTEGER,
+            defaultValue: 20
         }
     }
 );
