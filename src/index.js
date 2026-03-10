@@ -2,6 +2,8 @@ const { Client, GatewayIntentBits, Collection, PermissionsBitField } = require('
 const path = require('path');
 const fs = require('fs');
 const dotenv = require('dotenv');
+const { setupDatabases } = require('./databases');
+const { Config, Feature_Channels } = require('./models/config');
 
 const messageUpdateReader = require('./listeners/messageUpdateReader').default;
 const messageReader = require("./listeners/messageReader").default;
@@ -22,6 +24,9 @@ const client = new Client({
     ]
 });
 
+setupDatabases();
+
+client.db = { Config, Feature_Channels };
 client.commands = new Collection();
 client.passives = new Collection();
 client.functions = new Collection();
@@ -48,12 +53,6 @@ for (const ffile of functionFiles) {
 }
 
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
-
-const { setupDatabases } = require('./databases');
-const { Config, Feature_Channels } = require('./models/config');
-
-setupDatabases();
-client.db = { Config, Feature_Channels };
 
 ready(client);
 messageReader(client);
